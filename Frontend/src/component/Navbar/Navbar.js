@@ -13,15 +13,15 @@ class NavigationBar extends Component {
         // let message = "Hi, " + localStorage.getItem("nickname");
         return (
             <Navbar expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="/home">Finding Ohana</Navbar.Brand>
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto"></Nav>
-                    <Nav>
+            <Navbar.Brand href="/home">Finding Ohana</Navbar.Brand>
+            <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="mr-auto"></Nav>
+                <Nav>
 
-                        <Nav.Link href="/login" onClick={this.handleLogout}>Logout</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
+                    <Nav.Link href="/login" onClick={this.handleLogout}>Logout</Nav.Link>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
         );
     }
 }
