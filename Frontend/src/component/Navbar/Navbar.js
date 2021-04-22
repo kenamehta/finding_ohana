@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-// import NavDropdown from "react-bootstrap/NavDropdown";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { auth } from "../../service/auth";
 
 class NavigationBar extends Component {
@@ -10,19 +8,37 @@ class NavigationBar extends Component {
         localStorage.clear();
     };
     render() {
-        // let message = "Hi, " + localStorage.getItem("nickname");
-        return (
-            <Navbar expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="/home">Finding Ohana</Navbar.Brand>
-            <Navbar.Collapse id="responsive-navbar-nav">
-                <Nav className="mr-auto"></Nav>
-                <Nav>
+        if (localStorage.getItem("user")) {
+            let user = JSON.parse(localStorage.getItem("user"));
+            let message = "Hi, " + user.displayName.split(" ")[0];
+            return (
+                <Navbar expand="lg" bg="dark" variant="dark">
+                    <Navbar.Brand href="/home">Finding Ohana</Navbar.Brand>
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="mr-auto"></Nav>
+                        <Nav>
+                            <NavDropdown title={message}>
+                                <NavDropdown.Item href="/login" onClick={this.handleLogout}>Logout</NavDropdown.Item>
+                            </NavDropdown>
+                            <Nav.Link  ></Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+            );
+        }
 
-                    <Nav.Link href="/login" onClick={this.handleLogout}>Logout</Nav.Link>
-                </Nav>
-            </Navbar.Collapse>
-        </Navbar>
-        );
+        else
+            return (
+                <Navbar expand="lg" bg="dark" variant="dark">
+                    <Navbar.Brand href="/home">Finding Ohana</Navbar.Brand>
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="mr-auto"></Nav>
+                        <Nav>
+                            <Nav.Link href="/login">Sign-Up/Login</Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+            );
     }
 }
 export default NavigationBar;

@@ -27,7 +27,6 @@ class Login extends Component {
     }
     render() {
         if (this.state.user) {
-
             localStorage.setItem("user", JSON.stringify(this.state.user));
             console.log(JSON.parse(localStorage.getItem("user")));
             return <Redirect to="/home" />
