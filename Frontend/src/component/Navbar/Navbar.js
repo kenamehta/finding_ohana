@@ -11,12 +11,14 @@ class NavigationBar extends Component {
         if (localStorage.getItem("user")) {
             let user = JSON.parse(localStorage.getItem("user"));
             let message = "Hi, " + user.displayName.split(" ")[0];
+            let photoURL = user.photoURL;
             return (
                 <Navbar expand="lg" bg="dark" variant="dark">
                     <Navbar.Brand href="/home">Finding Ohana</Navbar.Brand>
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto"></Nav>
                         <Nav>
+                            <Nav.Link href="/profile"><img className="navbar-photoURL" alt="" src={photoURL ? photoURL : "default_photoURL.jpg"}></img></Nav.Link>
                             <NavDropdown title={message}>
                                 <NavDropdown.Item href="/login" onClick={this.handleLogout}>Logout</NavDropdown.Item>
                             </NavDropdown>

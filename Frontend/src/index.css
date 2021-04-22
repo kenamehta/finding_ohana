@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.navbar-photoURL{
+  height:3vh;
+  border-radius: 50px;
+}
+@media screen and (max-width: 1024px) {
+.navbar-photoURL{
+  height:2vh!important;
+}}

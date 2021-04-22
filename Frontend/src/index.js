@@ -22,6 +22,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import allReducer from "./reducer/allReducer";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import './index.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Store = createStore(

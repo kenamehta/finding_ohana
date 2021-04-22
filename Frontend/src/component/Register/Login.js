@@ -3,6 +3,7 @@ import { authMethods } from "../../config/auth-methods";
 import { auth } from "../../service/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { Redirect } from 'react-router';
+import Verify from "./Verify"
 // import firebase from "../../config/firebase-config";
 
 class Login extends Component {
@@ -13,7 +14,8 @@ class Login extends Component {
         signInFlow: "popup",
         signInOptions: authMethods,
         callbacks: {
-            signInSuccessWithAuthResult: false
+            signInSuccessWithAuthResult: false,
+            signInSuccessUrl: false
         }
     }
     componentDidMount() {
@@ -26,10 +28,13 @@ class Login extends Component {
         console.log(result);
     }
     render() {
-        if (this.state.user) {
+        let user = this.state.user;
+        if (user && user.emailVerified) {
             localStorage.setItem("user", JSON.stringify(this.state.user));
             console.log(JSON.parse(localStorage.getItem("user")));
             return <Redirect to="/home" />
+        } else if (user && !user.emailVerified) {
+            return <Verify></Verify>
         }
         return (<div>
             <div align="center" className="form-row-style mt-5 mb-5 p-5">
