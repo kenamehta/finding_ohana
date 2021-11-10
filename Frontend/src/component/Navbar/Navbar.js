@@ -20,6 +20,7 @@ class NavigationBar extends Component {
                         <Nav>
                             <Nav.Link href="/profile"><img className="navbar-photoURL" alt="" src={photoURL ? photoURL : "default_photoURL.jpg"}></img></Nav.Link>
                             <NavDropdown title={message}>
+                                <NavDropdown.Item href={"/profile/" + user.uid} onClick={this.handleLogout}>View Profile</NavDropdown.Item>
                                 <NavDropdown.Item href="/login" onClick={this.handleLogout}>Logout</NavDropdown.Item>
                             </NavDropdown>
                             <Nav.Link  ></Nav.Link>
