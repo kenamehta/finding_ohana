@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
+import LandingPage from "./LandingPage/LandingPage";
 // import LandingPage from "./LandingPage/LandingPage";
 import Navbar from "./Navbar/Navbar";
 import Login from "./Register/Login";
@@ -11,6 +12,7 @@ class Main extends Component {
       <div>
         <Route path="/" component={Navbar} />
         <Route path="/login" component={Login} />
+        <Route path="/home" component={LandingPage} />
       </div>
     );
   }
