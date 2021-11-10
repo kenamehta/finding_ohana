@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import LandingPage from "./LandingPage/LandingPage";
-// import LandingPage from "./LandingPage/LandingPage";
+import ProfilePage from "./ProfilePage/ProfilePage";
 import Navbar from "./Navbar/Navbar";
 import Login from "./Register/Login";
 
@@ -13,6 +13,7 @@ class Main extends Component {
         <Route path="/" component={Navbar} />
         <Route path="/login" component={Login} />
         <Route path="/home" component={LandingPage} />
+        <Route path="/profile/:userID" component={ProfilePage} />
       </div>
     );
   }

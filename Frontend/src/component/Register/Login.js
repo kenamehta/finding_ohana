@@ -34,7 +34,7 @@ class Login extends Component {
             console.log(JSON.parse(localStorage.getItem("user")));
             return <Redirect to="/home" />
         } else if (user && !user.emailVerified) {
-            return <Verify></Verify>
+            return <Verify />
         }
         return (<div>
             <div align="center" className="form-row-style mt-5 mb-5 p-5">
