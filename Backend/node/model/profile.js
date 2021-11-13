@@ -6,10 +6,11 @@ const profileSchema = new Mongoose.Schema({
   name: String,
   age: Number,
   pronoun: String,
+  bio: String,
   hobby: [String],
   interest: [String],
-  bio: String,
   posts: [{ type: Mongoose.Schema.ObjectId, ref: "Post" }],
+  tags: [String],
 });
 
 module.exports = { Profile: Mongoose.model("Profile", profileSchema) };

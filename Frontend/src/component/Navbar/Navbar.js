@@ -28,11 +28,12 @@ export default function NavigationBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
           <Nav>
-            <Nav.Link href="/profile">
+            <Nav.Link href={"/profile/" + user.uid}>
               <img
                 className="navbar-photoURL"
                 alt=""
                 src={photoURL ? photoURL : "default_photoURL.jpg"}
+                
               ></img>
             </Nav.Link>
             <NavDropdown title={message}>
