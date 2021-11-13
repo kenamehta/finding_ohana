@@ -25,7 +25,7 @@ const StoreProvider = (props) => {
         };
       }
       default:
-        throw new Error();
+        console.log("Unhandled case");
     }
   }, initialState);
   return (

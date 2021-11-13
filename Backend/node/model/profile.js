@@ -9,8 +9,11 @@ const profileSchema = new Mongoose.Schema({
   bio: String,
   hobby: [String],
   interest: [String],
-  posts: [{ type: Mongoose.Schema.ObjectId, ref: "Post" }],
+  posts: [String], //postIDs
   tags: [String],
+  friends: [String],
+  friendRequested: [String],
+  friendRequests: [String],
 });
 
 module.exports = { Profile: Mongoose.model("Profile", profileSchema) };
