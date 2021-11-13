@@ -1,28 +1,31 @@
 var express = require("express");
+
 var app = express();
+var cors = require("cors");
 const Mongoose = require("mongoose");
 
 Mongoose.connect(
   "mongodb+srv://archit:qazwsxedc@cluster0.ocdka.mongodb.net/Cluster0?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   }
 )
   .then(() => console.log("Connected to MongoDB"))
-  .catch(err => {
+  .catch((err) => {
     console.log("Failed to connect to MongoDB");
     console.log(err);
   });
 
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 app.use(
   express.urlencoded({
-    extended: true
+    extended: true,
   })
 );
 app.use(express.static("public"));
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -38,5 +41,5 @@ app.use(function(req, res, next) {
   next();
 });
 app.use("/profile", require("./routes/profile"));
-
+app.listen("3001");
 module.exports = app;
