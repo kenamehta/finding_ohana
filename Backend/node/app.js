@@ -24,7 +24,7 @@ app.use(
     extended: true,
   })
 );
-app.use(express.static("public"));
+app.use(express.static("./public"));
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
 

@@ -12,7 +12,12 @@ const s3FileUploader = multer({
     key: function (req, file, cb) {
       cb(
         null,
-        "ProfilePhoto/" + req.body.emailID + Date.now() + file.originalname
+        "ProfilePhoto/" +
+          req.params.userID +
+          "_" +
+          Date.now() +
+          "_" +
+          file.originalname
       );
     },
   }),
@@ -52,6 +57,16 @@ app.get("/:userID", (req, res) => {
     .catch((err) => {
       res.status(500).send({ message: err });
     });
+});
+
+app.post("/updatePhoto/:userID", s3FileUploader.single("file"), (req, res) => {
+  Profile.findByIdAndUpdate(
+    req.params.userID,
+    { photo: req.file.location },
+    { new: true, useFindAndModify: false }
+  ).then((result) => {
+    res.status(200).send({ message: "Profile photo updated", payload: result });
+  });
 });
 
 module.exports = app;

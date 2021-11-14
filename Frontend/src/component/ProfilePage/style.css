@@ -1,0 +1,41 @@
+.profile-photo-container {
+  padding-top: 20px;
+}
+
+.profile-photo {
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  object-fit: cover;
+}
+.profile-photo-button {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: 184px;
+  height: 184px;
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  border: 3.8px solid rgba(255, 255, 255, 0) !important;
+  color: rgba(255, 255, 255, 0.06) !important;
+  font-size: 13px;
+  font-weight: Bold;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.profile-photo-button:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  color: white !important;
+}
+
+.profile-photo-button:focus,
+.profile-photo-button:active {
+  box-shadow: none !important;
+  outline: 0px !important;
+  background-color: transparent !important;
+}
