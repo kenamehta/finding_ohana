@@ -1,0 +1,13 @@
+.large-block {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.medium-block {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.small-block {
+  font-size: 16px;
+}
