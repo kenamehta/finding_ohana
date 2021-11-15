@@ -68,7 +68,7 @@ export default function ProfilePage(props) {
             />
             <EditableData
               attribute="Interests"
-              data={hobbies}
+              data={interests}
               isSelf={isSelf}
               blockSize="medium-block"
             />
