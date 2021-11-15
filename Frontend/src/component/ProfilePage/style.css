@@ -20,7 +20,7 @@
 }
 .profile-photo-button {
   position: absolute;
-  top: 28%;
+  top: 29%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -53,9 +53,16 @@
   box-sizing: border-box;
   width: 105%;
 }
+.border-box-bio {
+  box-sizing: border-box;
+  width: 100%;
+}
 .edit-button:hover {
   cursor: pointer;
 }
 .card-style {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+.scrollable-column {
+  overflow-y: scroll;
 }

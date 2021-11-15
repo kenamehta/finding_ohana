@@ -15,7 +15,6 @@ export default function NavigationBar() {
       const userName = user.displayName;
       const payload = { userID, userName };
       axios.post(base + "/profile", payload).then((result) => {
-        console.log(result);
         dispatch({
           type: "SET_INITIAL_PROFILE",
           value: {

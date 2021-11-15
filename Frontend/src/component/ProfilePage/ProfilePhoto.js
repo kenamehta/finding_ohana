@@ -5,7 +5,6 @@ import ProfilePhotoUpdateModal from "./ProfilePhotoUpdateModal";
 import "./style.css";
 
 export default function ProfilePage({ isSelf, profileData, setProfileData }) {
-  console.log(profileData);
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {

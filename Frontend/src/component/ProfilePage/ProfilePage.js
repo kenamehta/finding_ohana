@@ -52,13 +52,13 @@ export default function ProfilePage(props) {
     <Container className="pt-5" align={isSelf ? "left" : "center"}>
       <Row>
         <Col sm={4}>
-          <Card border="light" className="p-3 card-style">
+          <Card border="light" className="card-style pt-3 pb-3">
             <ProfilePhoto
               isSelf={isSelf}
               profileData={profileData}
               setProfileData={setProfileData}
             />
-            <Row align="center" className="p-3">
+            <Row align="center">
               <Col className="large-block">{profileData.name}</Col>
             </Row>
             <EditableData
@@ -91,7 +91,24 @@ export default function ProfilePage(props) {
             />
           </Card>
         </Col>
-        <Col sm={8}></Col>
+        <Col sm={8} className="scrollable-column">
+          <Card border="light" className="p-3 card-style">
+            <Row>
+              <EditableData
+                fieldName="bio"
+                updateDetails={updateDetails}
+                attribute="About me"
+                data={profileData.bio}
+                isSelf={isSelf}
+              />
+            </Row>
+            <Row>
+              {profileData.post?.map((post) => (
+                <></>
+              ))}
+            </Row>
+          </Card>
+        </Col>
       </Row>
     </Container>
   );
