@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Form, Button, Image, Col } from "react-bootstrap";
 import { base } from "../../config/address";
+import { StoreContext } from "../../context/store";
 
 export default function ProfilePhotoUpdateModal({
   showModal,
@@ -12,6 +13,8 @@ export default function ProfilePhotoUpdateModal({
 }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const storeContext = useContext(StoreContext);
+  const { dispatch } = storeContext;
   const fileUploadHandler = (e) => {
     setSelectedFile(e.target.files[0]);
   };
@@ -33,9 +36,13 @@ export default function ProfilePhotoUpdateModal({
               ...profileData,
               photo: response.data.payload.photo,
             });
+            dispatch({
+              type: "UPDATE_PROFILE_PHOTO",
+              value: { profilePhoto: response.data.payload.photo },
+            });
+            handleHideModal();
           }
         });
-      handleHideModal();
     }
   };
 

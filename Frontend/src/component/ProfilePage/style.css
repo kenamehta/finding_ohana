@@ -20,7 +20,7 @@
 }
 .profile-photo-button {
   position: absolute;
-  top: 34%;
+  top: 28%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -37,12 +37,14 @@
 }
 
 .profile-photo-button:hover {
+  border-radius: 50% !important;
   background-color: rgba(0, 0, 0, 0.1) !important;
   color: white !important;
 }
 
 .profile-photo-button:focus,
 .profile-photo-button:active {
+  border-radius: 50% !important;
   box-shadow: none !important;
   outline: 0px !important;
   background-color: transparent !important;

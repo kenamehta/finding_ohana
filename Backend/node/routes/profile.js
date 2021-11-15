@@ -69,4 +69,17 @@ app.post("/updatePhoto/:userID", s3FileUploader.single("file"), (req, res) => {
   });
 });
 
+app.post("/updateDetails/:userID", (req, res) => {
+  const data = req.body;
+  console.log(data);
+  Profile.findByIdAndUpdate(req.params.userID, data, {
+    new: true,
+    useFindAndModify: false,
+  }).then((result) => {
+    res
+      .status(200)
+      .send({ message: "Profile details updated", payload: result });
+  });
+});
+
 module.exports = app;

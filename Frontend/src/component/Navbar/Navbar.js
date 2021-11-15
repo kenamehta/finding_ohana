@@ -7,7 +7,6 @@ import { StoreContext } from "../../context/store";
 
 export default function NavigationBar() {
   const storeContext = useContext(StoreContext);
-  console.log(storeContext);
   const { state, dispatch } = storeContext;
   useEffect(() => {
     if (localStorage.getItem("user")) {
@@ -22,6 +21,7 @@ export default function NavigationBar() {
           value: {
             userID: result.data.payload._id,
             userName: result.data.payload.name,
+            profilePhoto: result.data.payload.photo,
           },
         });
       });
@@ -35,7 +35,7 @@ export default function NavigationBar() {
   if (localStorage.getItem("user")) {
     let user = JSON.parse(localStorage.getItem("user"));
     let message = "Hi, " + user.displayName.split(" ")[0];
-    let photoURL = user.photoURL;
+    let photoURL = state.profilePhoto ?? user.photoURL;
     return (
       <Navbar expand="lg" bg="dark" variant="dark">
         <Navbar.Brand href="/home">Finding Ohana</Navbar.Brand>

@@ -24,6 +24,12 @@ const StoreProvider = (props) => {
           profilePhoto: action.value.profilePhoto,
         };
       }
+      case "UPDATE_PROFILE_PHOTO": {
+        return {
+          ...state,
+          profilePhoto: action.value.profilePhoto,
+        };
+      }
       default:
         console.log("Unhandled case");
     }

@@ -26,6 +26,22 @@ export default function ProfilePage(props) {
       }
     });
   }, [userID]);
+
+  const updateDetails = (fieldName, value) => {
+    let data = {};
+    if (fieldName === "hobby" || fieldName === "interest") {
+      data[fieldName] = value.split(",");
+    } else {
+      data[fieldName] = value;
+    }
+    axios
+      .post(base + `/profile/updateDetails/${profileData._id}`, data)
+      .then((response) => {
+        if (response.status === 200) {
+          setProfileData(response.data.payload);
+        }
+      });
+  };
   //   const isSelf = false;
   const isSelf = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))?.uid === profileData._id
@@ -42,35 +58,36 @@ export default function ProfilePage(props) {
               profileData={profileData}
               setProfileData={setProfileData}
             />
+            <Row align="center" className="p-3">
+              <Col className="large-block">{profileData.name}</Col>
+            </Row>
             <EditableData
-              attribute="Name"
-              data={profileData.name}
-              isSelf={isSelf}
-              blockSize="large-block"
-            />
-            <EditableData
+              fieldName="age"
+              updateDetails={updateDetails}
               attribute="Age"
               data={profileData.age}
               isSelf={isSelf}
-              blockSize="medium-block"
             />
             <EditableData
+              fieldName="pronoun"
+              updateDetails={updateDetails}
               attribute="Pronouns"
               data={profileData.pronoun}
               isSelf={isSelf}
-              blockSize="medium-block"
             />
             <EditableData
+              fieldName="hobby"
+              updateDetails={updateDetails}
               attribute="Hobbies"
               data={hobbies}
               isSelf={isSelf}
-              blockSize="medium-block"
             />
             <EditableData
+              fieldName="interest"
+              updateDetails={updateDetails}
               attribute="Interests"
               data={interests}
               isSelf={isSelf}
-              blockSize="medium-block"
             />
           </Card>
         </Col>
