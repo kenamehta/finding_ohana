@@ -4,12 +4,9 @@ import { FaCamera } from "react-icons/fa";
 import ProfilePhotoUpdateModal from "./ProfilePhotoUpdateModal";
 import "./style.css";
 
-export default function ProfilePage({ profileData, setProfileData }) {
+export default function ProfilePage({ isSelf, profileData, setProfileData }) {
   console.log(profileData);
   const [showModal, setShowModal] = useState(false);
-  const isSelf = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))?.uid === profileData._id
-    : false;
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -26,22 +23,26 @@ export default function ProfilePage({ profileData, setProfileData }) {
         handleHideModal={handleHideModal}
         profileData={profileData}
         setProfileData={setProfileData}
+        isSelf={isSelf}
       />
       <Image
         className="profile-photo"
         src={profileData.photo}
         roundedcircle="true"
       />
-      {isSelf ? (
-        <Button className="profile-photo-button" onClick={handleShowModal}>
+
+      <Button className="profile-photo-button" onClick={handleShowModal}>
+        {isSelf ? (
           <Row>
             <FaCamera size={25} style={{ margin: "0 auto" }} />
           </Row>
-          <Row>
-            <h5 style={{ margin: "0 auto", fontSize: "13px" }}>Change Photo</h5>
-          </Row>
-        </Button>
-      ) : null}
+        ) : null}
+        <Row>
+          <h5 style={{ margin: "0 auto", fontSize: "13px" }}>
+            {isSelf ? "Change Photo" : "View Photo"}
+          </h5>
+        </Row>
+      </Button>
     </Row>
   );
 }

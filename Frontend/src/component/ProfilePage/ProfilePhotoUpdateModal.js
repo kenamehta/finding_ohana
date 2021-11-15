@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Image, Col } from "react-bootstrap";
 import { base } from "../../config/address";
 
 export default function ProfilePhotoUpdateModal({
@@ -8,6 +8,7 @@ export default function ProfilePhotoUpdateModal({
   handleHideModal,
   profileData,
   setProfileData,
+  isSelf,
 }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -41,25 +42,34 @@ export default function ProfilePhotoUpdateModal({
   return (
     <Modal show={showModal} onHide={handleHideModal}>
       <Modal.Header closeButton>
-        <Modal.Title>Upload Profile Picture</Modal.Title>
+        <Modal.Title>
+          {isSelf ? "Upload Profile Picture" : "Profile Picture"}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form.Control
-          onChange={fileUploadHandler}
-          type="file"
-          name="profilePicture"
-          id="profilePicture"
-          accept="image/*"
-        />
+        <Image className="new-profile-photo center" src={profileData.photo} />
         <p className="errormessage">{errorMessage}</p>
       </Modal.Body>
       <Modal.Footer>
+        {isSelf ? (
+          <Col>
+            <Form.Control
+              onChange={fileUploadHandler}
+              type="file"
+              name="profilePicture"
+              id="profilePicture"
+              accept="image/*"
+            />
+          </Col>
+        ) : null}
         <Button className="cancel" onClick={handleHideModal}>
           Close
         </Button>
-        <Button className="save" onClick={onUpload}>
-          Upload
-        </Button>
+        {isSelf ? (
+          <Button className="save" onClick={onUpload}>
+            Upload
+          </Button>
+        ) : null}
       </Modal.Footer>
     </Modal>
   );

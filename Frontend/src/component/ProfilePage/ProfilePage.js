@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { base } from "../../config/address";
 import axios from "axios";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Card } from "react-bootstrap";
 import ProfilePhoto from "./ProfilePhoto";
 import "./style.css";
+import EditableData from "./EditableData";
+import { stringFromValues } from "./util";
 
 export default function ProfilePage(props) {
   const userID = props.match.params.userID;
@@ -24,15 +26,53 @@ export default function ProfilePage(props) {
       }
     });
   }, [userID]);
-
+  //   const isSelf = false;
+  const isSelf = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))?.uid === profileData._id
+    : false;
+  const interests = stringFromValues(profileData?.interest ?? []);
+  const hobbies = stringFromValues(profileData?.hobby ?? []);
   return (
-    <Container>
+    <Container className="pt-5" align={isSelf ? "left" : "center"}>
       <Row>
         <Col sm={4}>
-          <ProfilePhoto
-            profileData={profileData}
-            setProfileData={setProfileData}
-          />
+          <Card border="light" className="p-3 card-style">
+            <ProfilePhoto
+              isSelf={isSelf}
+              profileData={profileData}
+              setProfileData={setProfileData}
+            />
+            <EditableData
+              attribute="Name"
+              data={profileData.name}
+              isSelf={isSelf}
+              blockSize="large-block"
+            />
+            <EditableData
+              attribute="Age"
+              data={profileData.age}
+              isSelf={isSelf}
+              blockSize="medium-block"
+            />
+            <EditableData
+              attribute="Pronouns"
+              data={profileData.pronoun}
+              isSelf={isSelf}
+              blockSize="medium-block"
+            />
+            <EditableData
+              attribute="Hobbies"
+              data={hobbies}
+              isSelf={isSelf}
+              blockSize="medium-block"
+            />
+            <EditableData
+              attribute="Interests"
+              data={hobbies}
+              isSelf={isSelf}
+              blockSize="medium-block"
+            />
+          </Card>
         </Col>
         <Col sm={8}></Col>
       </Row>

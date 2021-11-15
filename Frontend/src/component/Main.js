@@ -4,6 +4,7 @@ import LandingPage from "./LandingPage/LandingPage";
 import ProfilePage from "./ProfilePage/ProfilePage";
 import Navbar from "./Navbar/Navbar";
 import Login from "./Register/Login";
+import "./style.css";
 
 //Create a Main Component
 class Main extends Component {
