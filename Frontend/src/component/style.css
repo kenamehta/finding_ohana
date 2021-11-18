@@ -129,3 +129,16 @@ Messaging css files ends here
 .dropdown-menu {
   margin: -10px 0px 0px -75px !important;
 }
+/*
+Comment css
+
+
+*/
+
+.comment-name{
+  text-align:left
+}
+.comment-out{
+  border-style: solid
+
+}
