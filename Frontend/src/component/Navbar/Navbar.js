@@ -8,6 +8,7 @@ import { StoreContext } from "../../context/store";
 export default function NavigationBar() {
   const storeContext = useContext(StoreContext);
   const { state, dispatch } = storeContext;
+
   useEffect(() => {
     if (localStorage.getItem("user")) {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -41,7 +42,7 @@ export default function NavigationBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
           <Nav>
-            <Nav.Link href={"/profile/" + state.userID}>
+            <Nav.Link href={"/profile/" + user.uid}>
               <img
                 className="navbar-photoURL"
                 alt=""
@@ -49,7 +50,7 @@ export default function NavigationBar() {
               ></img>
             </Nav.Link>
             <NavDropdown title={message}>
-              <NavDropdown.Item href={"/profile/" + state.userID}>
+              <NavDropdown.Item href={"/profile/" + user.uid}>
                 View Profile
               </NavDropdown.Item>
               <NavDropdown.Item href="/login" onClick={handleLogout}>
