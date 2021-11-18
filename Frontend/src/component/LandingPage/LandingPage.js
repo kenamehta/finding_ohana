@@ -19,16 +19,15 @@ const useStyles = makeStyles({
   },
 });
 const authUser = JSON.parse(localStorage.getItem("user"));
-if(authUser)
-{
+if (authUser) {
   let currentTalkjsUser = {
     name: authUser.displayName,
-    email : authUser.email,
-    photoUrl:authUser.photoURL,
-    id:authUser.uid
-  }
-  console.log(currentTalkjsUser)
-  localStorage.setItem("currentTalkjsUser",JSON.stringify(currentTalkjsUser));
+    email: authUser.email,
+    photoUrl: authUser.photoURL,
+    id: authUser.uid,
+  };
+  console.log(currentTalkjsUser);
+  localStorage.setItem("currentTalkjsUser", JSON.stringify(currentTalkjsUser));
 }
 
 export default function MediaCard() {
