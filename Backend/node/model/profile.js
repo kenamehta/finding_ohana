@@ -2,6 +2,8 @@ const Mongoose = require("mongoose");
 
 const profileSchema = new Mongoose.Schema({
   _id: String,
+  email: String,
+  role: String,
   photo: String,
   name: String,
   age: Number,

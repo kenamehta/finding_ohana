@@ -24,7 +24,7 @@ const s3FileUploader = multer({
 });
 
 app.post("/", (req, res) => {
-  const { userID, userName } = req.body;
+  const { userID, userName, email, role } = req.body;
   Profile.findById(userID)
     .then((result) => {
       if (result) {
@@ -32,7 +32,7 @@ app.post("/", (req, res) => {
           .status(200)
           .send({ message: "Profile already exists", payload: result });
       } else {
-        Profile.create({ _id: userID, name: userName })
+        Profile.create({ _id: userID, name: userName, email, role })
           .then((result2) => {
             res
               .status(200)
