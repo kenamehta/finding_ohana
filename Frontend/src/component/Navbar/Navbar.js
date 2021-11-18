@@ -48,7 +48,7 @@ export default function NavigationBar() {
             <Nav.Link href="/messaging">Messaging</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href={"/profile/" + user.userID}>
+            <Nav.Link href={"/profile/" + user.uid}>
               <img
                 className="navbar-photoURL"
                 alt=""
