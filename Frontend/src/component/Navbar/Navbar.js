@@ -41,6 +41,12 @@ export default function NavigationBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
           <Nav>
+            <Nav.Link href="/mynetwork">My Network</Nav.Link>
+          </Nav>
+          <Nav>
+            <Nav.Link href="/messaging">Messaging</Nav.Link>
+          </Nav>
+          <Nav>
             <Nav.Link href={"/profile/" + state.userID}>
               <img
                 className="navbar-photoURL"

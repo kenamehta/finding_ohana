@@ -25,6 +25,7 @@ class Login extends Component {
 
   render() {
     let user = this.state.user;
+    console.log(user);
     if (user && user.emailVerified) {
       localStorage.setItem("user", JSON.stringify(this.state.user));
       console.log(JSON.parse(localStorage.getItem("user")));

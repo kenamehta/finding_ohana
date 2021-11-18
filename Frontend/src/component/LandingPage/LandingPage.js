@@ -18,6 +18,18 @@ const useStyles = makeStyles({
     height: 140,
   },
 });
+const authUser = JSON.parse(localStorage.getItem("user"));
+if(authUser)
+{
+  let currentTalkjsUser = {
+    name: authUser.displayName,
+    email : authUser.email,
+    photoUrl:authUser.photoURL,
+    id:authUser.uid
+  }
+  console.log(currentTalkjsUser)
+  localStorage.setItem("currentTalkjsUser",JSON.stringify(currentTalkjsUser));
+}
 
 export default function MediaCard() {
   const classes = useStyles();
