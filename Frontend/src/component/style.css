@@ -125,3 +125,7 @@ Messaging css files starts here
 /*
 Messaging css files ends here
 */
+
+.dropdown-menu {
+  margin: -10px 0px 0px -75px !important;
+}
