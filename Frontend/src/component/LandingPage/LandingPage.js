@@ -6,6 +6,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import { Container, Form } from "react-bootstrap";
 import { CardHeader } from "@material-ui/core";
+import CardMedia from "@material-ui/core/CardMedia";
 
 const useStyles = makeStyles({
   root: {
@@ -69,6 +70,27 @@ export default function MediaCard() {
             Learn More
           </Button>
         </CardActions>
+      </Card>
+
+      <h3 className="m-4">Recent Posts</h3>
+      <Card className="m-4 comment-out">
+        <div className="d-flex">
+          <div className="col-3">
+            <CardMedia
+              className={classes.media}
+              image={
+                "https://randomuser.me/api/portraits/men/32.jpg"
+              }
+            />
+          </div>
+          <div className="col-7">
+            <CardHeader
+              title="Volleball Game today!!!"
+              subheader="We are a group of 5 looking for more people to join us on weekend volleball games."
+              className="comment-name"
+            />
+          </div>
+        </div>
       </Card>
     </Container>
   );
