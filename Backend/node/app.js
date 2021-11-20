@@ -41,5 +41,6 @@ app.use(function (req, res, next) {
   next();
 });
 app.use("/profile", require("./routes/profile"));
+app.use("/post", require("./routes/post"));
 app.listen("3001");
 module.exports = app;

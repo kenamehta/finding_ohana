@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Card, Button } from "react-bootstrap";
-import { Container, Form } from "react-bootstrap";
-import { CardHeader } from "@material-ui/core";
+import { Card, Button, Container, Form } from "react-bootstrap";
 import CardMedia from "@material-ui/core/CardMedia";
-import "../style.css";
+import "./style.css";
 import axios from "axios";
 import { base } from "../../config/address";
 
@@ -27,37 +25,53 @@ if (authUser) {
   localStorage.setItem("currentTalkjsUser", JSON.stringify(currentTalkjsUser));
 }
 
-const onShare = () => {
-  axios.post(`${base}/post/${authUser.uid}`).then((response) => {
-    if (response.status === 200) {
-      const data = response.data.payload;
-    }
-  });
-};
-
 export default function MediaCard() {
+  const [newPostContent, setNewPostContent] = useState("");
   const classes = useStyles();
+  const onShare = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${base}/post/${authUser.uid}`, { newPostContent })
+      .then((response) => {
+        if (response.status === 200) {
+          const recommendedPosts = response.data.payload;
+          setNewPostContent("");
+        }
+      });
+  };
 
+  const onChangeNewPostContent = (e) => {
+    setNewPostContent(e.target.value);
+  };
   return (
-    <Container className={classes.root} align="center">
+    <Container className={classes.root}>
       <Card border="light" className="mt-4 card-style">
-        <Card.Header as="h5">What's on your mind</Card.Header>
-        <Form className="mr-3 ml-3 mt-3">
-          <Form.Group>
-            <Form.Control as="textarea" rows={2} />
-          </Form.Group>
-        </Form>
-        <Button
-          className="form-control mr-3 ml-3 mb-3"
-          size="small"
-          onClick={onShare}
-        >
-          Share
-        </Button>
+        <Card.Header as="h5" className="card-header-style large-block">
+          What's on your mind?
+        </Card.Header>
+        <Card.Body>
+          <Form>
+            <Form.Group>
+              <Form.Control
+                as="textarea"
+                rows={2}
+                value={newPostContent}
+                onChange={onChangeNewPostContent}
+              />
+            </Form.Group>
+          </Form>
+          <Button
+            className="form-control share-button"
+            size="small"
+            onClick={onShare}
+          >
+            Share
+          </Button>
+        </Card.Body>
       </Card>
 
-      <h3 className="m-4">Recent Posts</h3>
-      <Card className="m-4 comment-out">
+      <h3 className="mt-4 large-block">Posts you might be interested in...</h3>
+      <Card className="card-style mt-3">
         <div className="d-flex">
           <div className="col-3">
             <CardMedia
@@ -66,11 +80,11 @@ export default function MediaCard() {
             />
           </div>
           <div className="col-7">
-            <CardHeader
+            {/* <CardHeader
               title="Volleball Game today!!!"
               subheader="We are a group of 5 looking for more people to join us on weekend volleball games."
               className="comment-name"
-            />
+            /> */}
           </div>
         </div>
       </Card>

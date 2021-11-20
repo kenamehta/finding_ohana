@@ -1,1 +1,18 @@
-
+.card-header-style {
+  background-color: honeydew !important;
+}
+.share-button {
+  background-color: honeydew !important;
+  color: black !important;
+  border-color: honeydew !important;
+  border-radius: 20% !important;
+}
+.share-button:hover {
+  background-color: palegoldenrod !important;
+  color: black !important;
+  border-color: palegoldenrod !important;
+  border-radius: 20% !important;
+}
+.card-style {
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}

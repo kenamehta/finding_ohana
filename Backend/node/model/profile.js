@@ -11,7 +11,8 @@ const profileSchema = new Mongoose.Schema({
   bio: String,
   hobby: [String],
   interest: [String],
-  posts: [String], //postIDs
+  myPosts: [{ type: Mongoose.Schema.Types.ObjectId, ref: "Post" }], //postIDs
+  recommendedPosts: [String],
   tags: [String],
   friends: [String],
   friendRequested: [String],

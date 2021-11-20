@@ -1,9 +1,13 @@
 const Mongoose = require("mongoose");
 
-export const postSchema = new Mongoose.Schema({
-  _id: String,
-  content: String,
-  userId: String,
-});
+const postSchema = new Mongoose.Schema(
+  {
+    content: String,
+    userId: String,
+  },
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = { Post: Mongoose.model("Post", postSchema) };
