@@ -16,3 +16,10 @@
 .card-style {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
+.post-photo {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  object-fit: cover;
+}
