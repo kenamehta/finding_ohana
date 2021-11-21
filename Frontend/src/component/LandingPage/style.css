@@ -16,8 +16,8 @@
 }
 .post-photo {
   border-radius: 50%;
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto;
   object-fit: cover;
 }

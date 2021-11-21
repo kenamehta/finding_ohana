@@ -59,10 +59,20 @@
 }
 .edit-button:hover {
   cursor: pointer;
+  transform: scale(1.15);
+}
+.delete-button:hover {
+  cursor: pointer;
+  transform: scale(1.15);
 }
 .card-style {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 .scrollable-column {
   overflow-y: scroll;
+  height: calc(100vh - 105px);
+}
+
+.my-post-card {
+  width: 100%;
 }

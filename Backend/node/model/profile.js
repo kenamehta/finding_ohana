@@ -12,7 +12,7 @@ const profileSchema = new Mongoose.Schema({
   hobby: [String],
   interest: [String],
   myPosts: [{ type: Mongoose.Schema.Types.ObjectId, ref: "Post" }], //postIDs
-  recommendedPosts: [String],
+  recommendedPosts: [{ type: Mongoose.Schema.Types.ObjectId, ref: "Post" }],
   tags: [String],
   friends: [String],
   friendRequested: [String],

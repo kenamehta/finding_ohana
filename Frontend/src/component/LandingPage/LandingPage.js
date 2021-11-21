@@ -89,7 +89,7 @@ export default function MediaCard() {
       <h3 className="mt-4 large-block">Posts you might be interested in...</h3>
       {recommendedPosts.map((post) => null)}
       <Card className="card-style mt-3">
-        <Row className="py-3 px-4">
+        <Row className="py-3 px-2">
           <Col md={2}>
             <Image
               className="post-photo"
@@ -100,6 +100,7 @@ export default function MediaCard() {
           <Col md={10}>
             <Row className="large-block">John Doe</Row>
             <Row className="small-block">Volleyball at SJSU court anyone?</Row>
+            <Row className="footer-block">{new Date()?.toLocaleString()}</Row>
           </Col>
         </Row>
       </Card>

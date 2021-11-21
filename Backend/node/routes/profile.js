@@ -51,6 +51,13 @@ app.post("/", (req, res) => {
 app.get("/:userID", (req, res) => {
   const userID = req.params.userID;
   Profile.findById(userID)
+    .populate({
+      path: "myPosts",
+      options: { sort: { createdAt: -1 } },
+      populate: {
+        path: "userID",
+      },
+    })
     .then((result) => {
       res.status(200).send({ message: "User profile", payload: result });
     })
@@ -80,6 +87,12 @@ app.post("/updateDetails/:userID", (req, res) => {
       .status(200)
       .send({ message: "Profile details updated", payload: result });
   });
+});
+
+app.post("/deletePost/:userID", (req, res) => {
+  const userID = req.params.userID;
+  const postID = req.body.postID;
+  Post.findOneAndDelete({ _id: postID }).then((res1) => console.log(res1));
 });
 
 module.exports = app;

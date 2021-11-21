@@ -13,7 +13,13 @@ app.post("/:userID", (req, res) => {
         { $push: { myPosts: res1._id } },
         { new: true, upsert: true, useFindAndModify: false }
       )
-        .populate({ path: "myPosts", options: { sort: { createdAt: -1 } } })
+        .populate({
+          path: "myPosts",
+          options: { sort: { createdAt: -1 } },
+          populate: {
+            path: "userID",
+          },
+        })
         .then((res2) => {
           if (res2) {
             res

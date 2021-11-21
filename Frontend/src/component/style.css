@@ -143,3 +143,8 @@ Comment css
 .comment-out {
   border-style: solid;
 }
+.footer-block {
+  font-size: 10px;
+  color: grey;
+  padding-top: 20px;
+}

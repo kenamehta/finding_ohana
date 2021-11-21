@@ -3,7 +3,7 @@ const Mongoose = require("mongoose");
 const postSchema = new Mongoose.Schema(
   {
     content: String,
-    userId: String,
+    userId: { type: Mongoose.Schema.Types.ObjectId, ref: "Profile" },
   },
   {
     timestamps: true,

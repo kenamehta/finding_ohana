@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { base } from "../../config/address";
 import axios from "axios";
-import { Col, Container, Row, Card } from "react-bootstrap";
+import { Col, Container, Row, Card, Image } from "react-bootstrap";
 import ProfilePhoto from "./ProfilePhoto";
 import "./style.css";
 import EditableData from "./EditableData";
-import { stringFromValues } from "./util";
+import { stringFromValues, getPostDate } from "./util";
+import { AiFillDelete } from "react-icons/ai";
 
 export default function ProfilePage(props) {
   const userID = props.match.params.userID;
   const [profileData, setProfileData] = useState({});
+
   useEffect(() => {
     axios.get(base + `/profile/${userID}`).then((response) => {
       if (response.status === 200) {
@@ -48,10 +50,21 @@ export default function ProfilePage(props) {
     : false;
   const interests = stringFromValues(profileData?.interest ?? []);
   const hobbies = stringFromValues(profileData?.hobby ?? []);
+
+  const onDeletePost = (userID, postID) => {
+    axios
+      .post(`${base}/profile/deletePost/${userID}`, { postID })
+      .then((response) => {
+        if (response.status === 200) {
+          setProfileData(response.data.payload);
+        }
+      });
+  };
+
   return (
     <Container className="pt-5" align={isSelf ? "left" : "center"}>
       <Row>
-        <Col sm={4}>
+        <Col md={4}>
           <Card border="light" className="card-style pt-3 pb-3">
             <ProfilePhoto
               isSelf={isSelf}
@@ -91,9 +104,9 @@ export default function ProfilePage(props) {
             />
           </Card>
         </Col>
-        <Col sm={8} className="scrollable-column">
-          <Card border="light" className="p-3 card-style">
-            <Row>
+        <Col md={8} className="scrollable-column">
+          <Row>
+            <Card border="light" className="p-3 card-style">
               <EditableData
                 fieldName="bio"
                 updateDetails={updateDetails}
@@ -101,13 +114,42 @@ export default function ProfilePage(props) {
                 data={profileData.bio}
                 isSelf={isSelf}
               />
+            </Card>
+          </Row>
+          <Row className="large-block mt-3">My Posts</Row>
+
+          {profileData.myPosts?.map((post) => (
+            <Row key={post._id}>
+              <Card className="card-style mt-3 my-post-card">
+                <Row className="py-2 px-3">
+                  <Col md={2}>
+                    <Image
+                      className="post-photo"
+                      src={profileData.photo}
+                      roundedcircle="true"
+                    />
+                  </Col>
+                  <Col md={isSelf ? 9 : 10}>
+                    <Row className="large-block">{profileData.name}</Row>
+                    <Row className="small-block">{post.content}</Row>
+                    <Row className="footer-block">
+                      {getPostDate(post.createdAt)}
+                    </Row>
+                  </Col>
+                  {isSelf ? (
+                    <Col md={1}>
+                      <AiFillDelete
+                        className="delete-button"
+                        onClick={() =>
+                          onDeletePost(profileData.userID, post._id)
+                        }
+                      />
+                    </Col>
+                  ) : null}
+                </Row>
+              </Card>
             </Row>
-            <Row>
-              {profileData.post?.map((post) => (
-                <></>
-              ))}
-            </Row>
-          </Card>
+          ))}
         </Col>
       </Row>
     </Container>
