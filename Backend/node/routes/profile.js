@@ -1,5 +1,6 @@
 const express = require("express");
 const { Profile } = require("../model/profile");
+const { Post } = require("../model/post");
 const app = express.Router();
 const { s3, s3Bucket } = require("../config/s3");
 const multer = require("multer");
@@ -92,7 +93,24 @@ app.post("/updateDetails/:userID", (req, res) => {
 app.post("/deletePost/:userID", (req, res) => {
   const userID = req.params.userID;
   const postID = req.body.postID;
-  Post.findOneAndDelete({ _id: postID }).then((res1) => console.log(res1));
+  Post.findOneAndDelete({ _id: postID }).then((res1) => {
+    if (res1) {
+      Profile.updateOne(
+        { _id: userID },
+        {
+          $pullAll: { myPosts: [postID] },
+        }
+      ).then((res2) => {
+        if (res2) {
+          Profile.findById(userID).then((res3) => {
+            if (res3) {
+              res.status(200).send({ message: "Post deleted", payload: res3 });
+            }
+          });
+        }
+      });
+    }
+  });
 });
 
 module.exports = app;

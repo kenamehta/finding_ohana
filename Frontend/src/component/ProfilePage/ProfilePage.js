@@ -6,7 +6,8 @@ import ProfilePhoto from "./ProfilePhoto";
 import "./style.css";
 import EditableData from "./EditableData";
 import { stringFromValues, getPostDate } from "./util";
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiOutlineRead } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 export default function ProfilePage(props) {
   const userID = props.match.params.userID;
@@ -53,7 +54,7 @@ export default function ProfilePage(props) {
 
   const onDeletePost = (userID, postID) => {
     axios
-      .post(`${base}/profile/deletePost/${userID}`, { postID })
+      .post(`${base}/profile/deletePost/${profileData._id}`, { postID })
       .then((response) => {
         if (response.status === 200) {
           setProfileData(response.data.payload);
@@ -117,8 +118,55 @@ export default function ProfilePage(props) {
             </Card>
           </Row>
           <Row className="large-block mt-3">My Posts</Row>
-
-          {profileData.myPosts?.map((post) => (
+          {!profileData.myPosts || profileData.myPosts.length === 0 ? (
+            <>
+              <Row className="empty-state">
+                <AiOutlineRead size={200} color="darkgrey" />
+              </Row>
+              <Row className="empty-state large-block">No posts to show!</Row>
+              <Row className="empty-state">
+                Go to timeline to create a new post
+              </Row>
+            </>
+          ) : (
+            profileData.myPosts?.map((post) => (
+              <Row key={post._id}>
+                <Card className="card-style mt-3 my-post-card">
+                  <Row className="py-2 px-3">
+                    <Col md={2}>
+                      <Image
+                        className="post-photo"
+                        src={profileData.photo}
+                        roundedcircle="true"
+                      />
+                    </Col>
+                    <Col md={isSelf ? 9 : 10}>
+                      <Row className="post-user-name large-block">
+                        <Link to={"/profile/" + profileData._id}>
+                          {profileData.name}
+                        </Link>
+                      </Row>
+                      <Row className="small-block">{post.content}</Row>
+                      <Row className="footer-block">
+                        {getPostDate(post.createdAt)}
+                      </Row>
+                    </Col>
+                    {isSelf ? (
+                      <Col md={1}>
+                        <AiFillDelete
+                          className="delete-button"
+                          onClick={() =>
+                            onDeletePost(profileData.userID, post._id)
+                          }
+                        />
+                      </Col>
+                    ) : null}
+                  </Row>
+                </Card>
+              </Row>
+            ))
+          )}
+          {/* {profileData.myPosts?.map((post) => (
             <Row key={post._id}>
               <Card className="card-style mt-3 my-post-card">
                 <Row className="py-2 px-3">
@@ -130,7 +178,11 @@ export default function ProfilePage(props) {
                     />
                   </Col>
                   <Col md={isSelf ? 9 : 10}>
-                    <Row className="large-block">{profileData.name}</Row>
+                    <Row className="post-user-name large-block">
+                      <Link to={"/profile/" + profileData._id}>
+                        {profileData.name}
+                      </Link>
+                    </Row>
                     <Row className="small-block">{post.content}</Row>
                     <Row className="footer-block">
                       {getPostDate(post.createdAt)}
@@ -149,7 +201,7 @@ export default function ProfilePage(props) {
                 </Row>
               </Card>
             </Row>
-          ))}
+          ))} */}
         </Col>
       </Row>
     </Container>
