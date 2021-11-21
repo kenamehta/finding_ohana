@@ -1,5 +1,6 @@
 from flask import Flask, request
 import MongoDb
+from friend_recommendations import get_recommendations
 
 app = Flask(__name__)
 db = MongoDb.getConnection()
@@ -24,5 +25,12 @@ def generateTags():
     else:
         db["users"].update_one({"userId": userId}, {"$set": {"tags": tags}})
     return 'generated'
+
+@app.route('/generateFriendRecommendations', methods=['POST'])
+def generateFriendRecommendations():
+    req = request.getjson()
+    user_id = req['userID']
+    result = get_recommendations(user_id)
+    return result
 
 import timeline
