@@ -52,7 +52,7 @@ export default function ProfilePage(props) {
   const interests = stringFromValues(profileData?.interest ?? []);
   const hobbies = stringFromValues(profileData?.hobby ?? []);
 
-  const onDeletePost = (userID, postID) => {
+  const onDeletePost = (postID) => {
     axios
       .post(`${base}/profile/deletePost/${profileData._id}`, { postID })
       .then((response) => {
@@ -63,7 +63,7 @@ export default function ProfilePage(props) {
   };
 
   return (
-    <Container className="pt-5" align={isSelf ? "left" : "center"}>
+    <Container className="pt-5">
       <Row>
         <Col md={4}>
           <Card border="light" className="card-style pt-3 pb-3">
@@ -74,6 +74,14 @@ export default function ProfilePage(props) {
             />
             <Row align="center">
               <Col className="large-block">{profileData.name}</Col>
+            </Row>
+            <Row align="center">
+              <Col md={4}></Col>
+              {isSelf ? null : (
+                <Col md={4} className="x-small-block request-button">
+                  Send Request
+                </Col>
+              )}
             </Row>
             <EditableData
               fieldName="age"
@@ -107,7 +115,7 @@ export default function ProfilePage(props) {
         </Col>
         <Col md={8} className="scrollable-column">
           <Row>
-            <Card border="light" className="p-3 card-style">
+            <Card border="light" className="about-card  p-3 card-style">
               <EditableData
                 fieldName="bio"
                 updateDetails={updateDetails}
@@ -155,9 +163,7 @@ export default function ProfilePage(props) {
                       <Col md={1}>
                         <AiFillDelete
                           className="delete-button"
-                          onClick={() =>
-                            onDeletePost(profileData.userID, post._id)
-                          }
+                          onClick={() => onDeletePost(post._id)}
                         />
                       </Col>
                     ) : null}

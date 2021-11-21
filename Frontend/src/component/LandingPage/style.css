@@ -1,15 +1,34 @@
 .card-header-style {
-  background-color: honeydew !important;
+  /* background-color: honeydew !important; */
+  background-image: linear-gradient(
+    to right,
+    blue,
+    indigo,
+    red,
+    orange,
+    yellow,
+    green,
+    violet
+  );
+  color: white;
 }
 .share-button {
-  background-color: honeydew !important;
+  background-image: linear-gradient(
+    to right,
+    indigo,
+    violet,
+    green,
+    yellow,
+    orange,
+    red,
+    blue
+  );
   color: black !important;
-  border-color: honeydew !important;
+  border-color: white !important;
   border-radius: 20% !important;
 }
 .share-button:hover:not(.disabled-button) {
-  background-color: palegoldenrod !important;
-  border-color: palegoldenrod !important;
+  transform: scale(1.05);
 }
 .card-style {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);

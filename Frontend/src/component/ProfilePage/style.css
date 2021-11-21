@@ -20,7 +20,6 @@
 }
 .profile-photo-button {
   position: absolute;
-  top: 29%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -34,6 +33,12 @@
   font-weight: Bold;
   text-align: center;
   margin: 0 auto;
+}
+.self-profile-photo {
+  top: 29%;
+}
+.other-profile-photo {
+  top: 30%;
 }
 
 .profile-photo-button:hover {
@@ -70,6 +75,9 @@
 .card-style {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
+.about-card {
+  width: 100%;
+}
 .scrollable-column {
   overflow-y: scroll;
   height: calc(100vh - 105px);
@@ -91,4 +99,14 @@
   align-items: center;
   justify-content: center;
   color: darkgray;
+}
+
+.request-button {
+  padding: 5px;
+  border-radius: 10px;
+  background-color: lightgreen;
+  cursor: pointer;
+}
+.request-button:hover {
+  transform: scale(1.15);
 }

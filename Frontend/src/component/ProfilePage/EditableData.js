@@ -26,11 +26,11 @@ export default function EditableData({
             <Row
               className={"pt-2" + (isBio ? " border-box-bio" : " border-box")}
             >
-              <Col sm={isBio ? 2 : 4} className="medium-block">
+              <Col md={isBio ? 2 : 4} className="medium-block">
                 {attribute + ": "}
               </Col>
               <Col
-                sm={isSelf ? (isBio ? 9 : 6) : isBio ? 10 : 8}
+                md={isSelf ? (isBio ? 9 : 6) : isBio ? 10 : 8}
                 className={isBio ? "small-block" : "medium-block"}
               >
                 {isBio || isHobbyOrInterest ? (

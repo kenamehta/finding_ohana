@@ -30,7 +30,13 @@ export default function ProfilePage({ isSelf, profileData, setProfileData }) {
         roundedcircle="true"
       />
 
-      <Button className="profile-photo-button" onClick={handleShowModal}>
+      <Button
+        className={
+          "profile-photo-button" +
+          (isSelf ? " self-profile-photo" : " other-profile-photo")
+        }
+        onClick={handleShowModal}
+      >
         {isSelf ? (
           <Row>
             <FaCamera size={25} style={{ margin: "0 auto" }} />
