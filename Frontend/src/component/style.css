@@ -1,15 +1,15 @@
 .large-block {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 20px !important;
+  font-weight: 600 !important;
 }
 
 .medium-block {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 16px !important;
+  font-weight: 500 !important;
 }
 
 .small-block {
-  font-size: 16px;
+  font-size: 16px !important;
 }
 .card-style {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);

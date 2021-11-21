@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
-  Button,
   Container,
   Form,
   Row,
   Col,
   Image,
+  Button,
 } from "react-bootstrap";
 import "./style.css";
 import axios from "axios";
@@ -32,10 +32,13 @@ if (authUser) {
 export default function MediaCard() {
   const [newPostContent, setNewPostContent] = useState("");
   const [recommendedPosts, setRecommendedPosts] = useState([]);
+  const [isPosting, setIsPosting] = useState(false);
+
   const classes = useStyles();
 
   const onShare = (e) => {
     e.preventDefault();
+    setIsPosting(true);
     axios
       .post(`${base}/post/${authUser.uid}`, { newPostContent })
       .then((response) => {
@@ -43,6 +46,7 @@ export default function MediaCard() {
           const recommendedPosts = response.data.payload.recommendedPosts;
           setRecommendedPosts(recommendedPosts);
           setNewPostContent("");
+          setIsPosting(false);
         }
       });
   };
@@ -69,9 +73,13 @@ export default function MediaCard() {
             </Form.Group>
           </Form>
           <Button
-            className="form-control share-button"
+            className={
+              "form-control share-button large-block" +
+              (isPosting ? " disabled-button" : "")
+            }
             size="small"
             onClick={onShare}
+            disabled={isPosting}
           >
             Share
           </Button>
