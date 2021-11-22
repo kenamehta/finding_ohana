@@ -32,13 +32,13 @@
   font-size: 13px;
   font-weight: Bold;
   text-align: center;
-  margin: 0 auto;
+  top: 46%;
 }
-.self-profile-photo {
-  top: 29%;
+.profile-photo-card {
+  width: 95%;
 }
-.other-profile-photo {
-  top: 30%;
+.details-card {
+  width: 95%;
 }
 
 .profile-photo-button:hover {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -12,6 +12,8 @@ import {
 import "./style.css";
 import axios from "axios";
 import { base } from "../../config/address";
+import { getPostDate } from "../ProfilePage/util";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -35,7 +37,9 @@ export default function MediaCard() {
   const [isPosting, setIsPosting] = useState(false);
 
   const classes = useStyles();
-
+  useEffect(() => {
+    axios.get(`/recommendedPosts/${authUser.uid}`);
+  }, []);
   const onShare = (e) => {
     e.preventDefault();
     setIsPosting(true);
@@ -43,8 +47,10 @@ export default function MediaCard() {
       .post(`${base}/post/${authUser.uid}`, { newPostContent })
       .then((response) => {
         if (response.status === 200) {
-          const recommendedPosts = response.data.payload.recommendedPosts;
-          setRecommendedPosts(recommendedPosts);
+          const newPost = response.data.payload;
+          console.log(recommendedPosts);
+          setRecommendedPosts([newPost, ...recommendedPosts]);
+          console.log(recommendedPosts);
           setNewPostContent("");
           setIsPosting(false);
         }
@@ -87,53 +93,33 @@ export default function MediaCard() {
       </Card>
 
       <h3 className="mt-4 large-block">Posts you might be interested in...</h3>
-      {recommendedPosts.map((post) => null)}
-      <Card className="card-style mt-3">
-        <Row className="py-3 px-2">
-          <Col md={2}>
-            <Image
-              className="post-photo"
-              src="https://randomuser.me/api/portraits/men/32.jpg"
-              roundedcircle="true"
-            />
-          </Col>
-          <Col md={10}>
-            <Row className="large-block">John Doe</Row>
-            <Row className="small-block">Volleyball at SJSU court anyone?</Row>
-            <Row className="footer-block">{new Date()?.toLocaleString()}</Row>
-          </Col>
+      {console.log(recommendedPosts)}
+      {recommendedPosts.map((post) => (
+        <Row key={post._id}>
+          <Card className="card-style mt-3 my-post-card">
+            <Row className="py-2 px-3">
+              <Col md={2}>
+                <Image
+                  className="post-photo"
+                  src={post.userID.photo}
+                  roundedcircle="true"
+                />
+              </Col>
+              <Col md={10}>
+                <Row className="post-user-name large-block">
+                  <Link to={"/profile/" + post.userID._id}>
+                    {post.userID.name}
+                  </Link>
+                </Row>
+                <Row className="small-block">{post.content}</Row>
+                <Row className="footer-block">
+                  {getPostDate(post.createdAt)}
+                </Row>
+              </Col>
+            </Row>
+          </Card>
         </Row>
-      </Card>
-      <Card className="card-style mt-3">
-        <Row className="py-3 px-4">
-          <Col md={2}>
-            <Image
-              className="post-photo"
-              src="https://randomuser.me/api/portraits/men/32.jpg"
-              roundedcircle="true"
-            />
-          </Col>
-          <Col md={10}>
-            <Row className="large-block">John Doe</Row>
-            <Row className="small-block">Volleyball at SJSU court anyone?</Row>
-          </Col>
-        </Row>
-      </Card>
-      <Card className="card-style mt-3">
-        <Row className="py-3 px-4">
-          <Col md={2}>
-            <Image
-              className="post-photo"
-              src="https://randomuser.me/api/portraits/men/32.jpg"
-              roundedcircle="true"
-            />
-          </Col>
-          <Col md={10}>
-            <Row className="large-block">John Doe</Row>
-            <Row className="small-block">Volleyball at SJSU court anyone?</Row>
-          </Col>
-        </Row>
-      </Card>
+      ))}
     </Container>
   );
 }

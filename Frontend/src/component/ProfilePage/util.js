@@ -13,10 +13,11 @@ export const stringFromValues = (valueArray) => {
 };
 
 export const getPostDate = (utcDate) => {
-  const dateArr = Date(utcDate)?.toLocaleString()?.split(" ");
-  const timeArr = dateArr[4].split(":");
-  const hours = timeArr[0];
+  const formattedDate = new Date(utcDate);
+  const date = formattedDate.toDateString();
+  const timeArr = formattedDate.toTimeString()?.split(":");
+  const hours = parseInt(timeArr[0]);
   const suffix = hours >= 12 ? "PM" : "AM";
   const time = ((hours + 11) % 12) + 1 + ":" + timeArr[1] + " " + suffix;
-  return dateArr[1] + " " + dateArr[2] + ", " + dateArr[3] + ", " + time;
+  return date + ", " + time;
 };

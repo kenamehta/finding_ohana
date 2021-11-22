@@ -8,23 +8,28 @@ app.post("/:userID", (req, res) => {
   const userID = req.params.userID;
   Post.create({ userID, content: newPostContent }).then((res1) => {
     if (res1) {
+      const postID = res1._id;
       Profile.findByIdAndUpdate(
         userID,
-        { $push: { myPosts: res1._id } },
+        { $push: { myPosts: postID } },
         { new: true, upsert: true, useFindAndModify: false }
       )
-        .populate({
-          path: "myPosts",
-          options: { sort: { createdAt: -1 } },
-          populate: {
-            path: "userID",
-          },
-        })
+        // .populate({
+        //   path: "myPosts",
+        //   options: { sort: { createdAt: -1 } },
+        //   populate: {
+        //     path: "userID",
+        //   },
+        // })
         .then((res2) => {
           if (res2) {
-            res
-              .status(200)
-              .send({ message: "Created new post", payload: res2 });
+            Post.findById(postID)
+              .populate("userID")
+              .then((res3) => {
+                res
+                  .status(200)
+                  .send({ message: "Created new post", payload: res3 });
+              });
           }
         });
     }

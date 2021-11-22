@@ -19,13 +19,14 @@ export default function ProfilePage(props) {
         if (
           response.data.payload.photo &&
           response.data.payload.photo.length > 0
-        )
+        ) {
           setProfileData(response.data.payload);
-        else
+        } else {
           setProfileData({
             ...response.data.payload,
             photo: `${base}/default.png`,
           });
+        }
       }
     });
   }, [userID]);
@@ -41,7 +42,7 @@ export default function ProfilePage(props) {
       .post(base + `/profile/updateDetails/${profileData._id}`, data)
       .then((response) => {
         if (response.status === 200) {
-          setProfileData(response.data.payload);
+          setProfileData(profileData);
         }
       });
   };
@@ -66,52 +67,64 @@ export default function ProfilePage(props) {
     <Container className="pt-5">
       <Row>
         <Col md={4}>
-          <Card border="light" className="card-style pt-3 pb-3">
-            <ProfilePhoto
-              isSelf={isSelf}
-              profileData={profileData}
-              setProfileData={setProfileData}
-            />
-            <Row align="center">
-              <Col className="large-block">{profileData.name}</Col>
-            </Row>
-            <Row align="center">
-              <Col md={4}></Col>
-              {isSelf ? null : (
-                <Col md={4} className="x-small-block request-button">
-                  Send Request
-                </Col>
-              )}
-            </Row>
-            <EditableData
-              fieldName="age"
-              updateDetails={updateDetails}
-              attribute="Age"
-              data={profileData.age}
-              isSelf={isSelf}
-            />
-            <EditableData
-              fieldName="pronoun"
-              updateDetails={updateDetails}
-              attribute="Pronouns"
-              data={profileData.pronoun}
-              isSelf={isSelf}
-            />
-            <EditableData
-              fieldName="hobby"
-              updateDetails={updateDetails}
-              attribute="Hobbies"
-              data={hobbies}
-              isSelf={isSelf}
-            />
-            <EditableData
-              fieldName="interest"
-              updateDetails={updateDetails}
-              attribute="Interests"
-              data={interests}
-              isSelf={isSelf}
-            />
-          </Card>
+          <Row>
+            <Card
+              border="light"
+              className="profile-photo-card card-style pt-3 pb-3"
+            >
+              <ProfilePhoto
+                isSelf={isSelf}
+                profileData={profileData}
+                setProfileData={setProfileData}
+              />
+              <Row align="center">
+                <Col className="large-block">{profileData.name}</Col>
+              </Row>
+            </Card>
+          </Row>
+          <Row align="center" className="mt-3">
+            <Col md={4}></Col>
+            {isSelf ? null : (
+              <Col md={4} className="x-small-block request-button">
+                Send Request
+              </Col>
+            )}
+          </Row>
+          <Row>
+            <Card
+              border="light"
+              className="details-card card-style pt-3 pb-3 mt-3"
+            >
+              <EditableData
+                fieldName="age"
+                updateDetails={updateDetails}
+                attribute="Age"
+                data={profileData.age}
+                isSelf={isSelf}
+              />
+              <EditableData
+                fieldName="pronoun"
+                updateDetails={updateDetails}
+                attribute="Pronouns"
+                data={profileData.pronoun}
+                isSelf={isSelf}
+              />
+              <EditableData
+                fieldName="hobby"
+                updateDetails={updateDetails}
+                attribute="Hobbies"
+                data={hobbies}
+                isSelf={isSelf}
+              />
+              <EditableData
+                fieldName="interest"
+                updateDetails={updateDetails}
+                attribute="Interests"
+                data={interests}
+                isSelf={isSelf}
+              />
+            </Card>
+          </Row>
         </Col>
         <Col md={8} className="scrollable-column">
           <Row>
