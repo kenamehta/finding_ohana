@@ -1,0 +1,6 @@
+pymongo
+versioneer
+Flask
+numpy
+pandas
+bson
