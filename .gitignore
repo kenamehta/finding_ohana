@@ -7,8 +7,8 @@
 .pnp.js
 
 # config
-/Frontend/src/config
-/Backend/node/config
+/Frontend/src/config/*
+/Backend/node/config/*
 
 # testing
 /coverage
