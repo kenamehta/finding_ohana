@@ -42,7 +42,7 @@ export default function ProfilePage(props) {
       .post(base + `/profile/updateDetails/${profileData._id}`, data)
       .then((response) => {
         if (response.status === 200) {
-          setProfileData(profileData);
+          setProfileData(response.data.payload);
         }
       });
   };
