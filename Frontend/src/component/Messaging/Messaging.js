@@ -30,7 +30,6 @@ class Messaging extends Component {
         }
 
         this.inbox = window.talkSession.createInbox();
-        console.log(this.inbox);
         this.inbox.mount(this.container);
       })
       .catch((e) => console.error(e));

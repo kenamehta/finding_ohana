@@ -48,9 +48,7 @@ export default function MediaCard() {
       .then((response) => {
         if (response.status === 200) {
           const newPost = response.data.payload;
-          console.log(recommendedPosts);
           setRecommendedPosts([newPost, ...recommendedPosts]);
-          console.log(recommendedPosts);
           setNewPostContent("");
           setIsPosting(false);
         }
@@ -93,7 +91,6 @@ export default function MediaCard() {
       </Card>
 
       <h3 className="mt-4 large-block">Posts you might be interested in...</h3>
-      {console.log(recommendedPosts)}
       {recommendedPosts.map((post) => (
         <Row key={post._id}>
           <Card className="card-style mt-3 my-post-card">

@@ -79,7 +79,6 @@ app.post("/updatePhoto/:userID", s3FileUploader.single("file"), (req, res) => {
 
 app.post("/updateDetails/:userID", (req, res) => {
   const data = req.body;
-  console.log(data);
   Profile.findByIdAndUpdate(req.params.userID, data, {
     new: true,
     useFindAndModify: false,
@@ -102,11 +101,21 @@ app.post("/deletePost/:userID", (req, res) => {
         }
       ).then((res2) => {
         if (res2) {
-          Profile.findById(userID).then((res3) => {
-            if (res3) {
-              res.status(200).send({ message: "Post deleted", payload: res3 });
-            }
-          });
+          Profile.findById(userID)
+            .populate({
+              path: "myPosts",
+              options: { sort: { createdAt: -1 } },
+              populate: {
+                path: "userID",
+              },
+            })
+            .then((res3) => {
+              if (res3) {
+                res
+                  .status(200)
+                  .send({ message: "Post deleted", payload: res3 });
+              }
+            });
         }
       });
     }

@@ -14,24 +14,17 @@ app.post("/:userID", (req, res) => {
         { $push: { myPosts: postID } },
         { new: true, upsert: true, useFindAndModify: false }
       )
-        // .populate({
-        //   path: "myPosts",
-        //   options: { sort: { createdAt: -1 } },
-        //   populate: {
-        //     path: "userID",
-        //   },
-        // })
-        .then((res2) => {
-          if (res2) {
-            Post.findById(postID)
-              .populate("userID")
-              .then((res3) => {
-                res
-                  .status(200)
-                  .send({ message: "Created new post", payload: res3 });
-              });
-          }
-        });
+      .then((res2) => {
+        if (res2) {
+          Post.findById(postID)
+            .populate("userID")
+            .then((res3) => {
+              res
+                .status(200)
+                .send({ message: "Created new post", payload: res3 });
+            });
+        }
+      });
     }
   });
 });
