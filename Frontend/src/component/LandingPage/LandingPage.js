@@ -20,16 +20,6 @@ const useStyles = makeStyles({
     maxWidth: 800,
   },
 });
-const authUser = JSON.parse(localStorage.getItem("user"));
-if (authUser) {
-  let currentTalkjsUser = {
-    name: authUser.displayName,
-    email: authUser.email,
-    photoUrl: authUser.photoURL,
-    id: authUser.uid,
-  };
-  localStorage.setItem("currentTalkjsUser", JSON.stringify(currentTalkjsUser));
-}
 
 export default function MediaCard() {
   const [newPostContent, setNewPostContent] = useState("");
@@ -37,9 +27,25 @@ export default function MediaCard() {
   const [isPosting, setIsPosting] = useState(false);
 
   const classes = useStyles();
+
+  const authUser = JSON.parse(localStorage.getItem("user"));
+  if (authUser) {
+    let currentTalkjsUser = {
+      name: authUser.displayName,
+      email: authUser.email,
+      photoUrl: authUser.photoURL,
+      id: authUser.uid,
+    };
+    localStorage.setItem(
+      "currentTalkjsUser",
+      JSON.stringify(currentTalkjsUser)
+    );
+  }
+
   useEffect(() => {
     axios.get(`/recommendedPosts/${authUser.uid}`);
   }, []);
+
   const onShare = (e) => {
     e.preventDefault();
     setIsPosting(true);
