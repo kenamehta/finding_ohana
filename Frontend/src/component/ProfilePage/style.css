@@ -101,12 +101,31 @@
   color: darkgray;
 }
 
-.request-button {
+.send-button,
+.unfriend-button,
+.sent-button,
+.accept-button {
   padding: 5px;
   border-radius: 10px;
-  background-color: lightgreen;
+
   cursor: pointer;
 }
-.request-button:hover {
+.accept-button {
+  background-color: lightgreen;
+}
+.sent-button {
+  background-color: lightgray;
+}
+.unfriend-button {
+  background-color: red;
+}
+.send-button {
+  background-color: yellow;
+}
+
+.send-button:hover,
+.unfriend-button:hover,
+.accept-button:hover,
+.sent-button:hover {
   transform: scale(1.15);
 }

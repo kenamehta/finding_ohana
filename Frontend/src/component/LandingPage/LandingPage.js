@@ -44,7 +44,7 @@ export default function MediaCard() {
 
   useEffect(() => {
     axios.get(`/recommendedPosts/${authUser.uid}`);
-  }, []);
+  }, [authUser.uid]);
 
   const onShare = (e) => {
     e.preventDefault();

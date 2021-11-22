@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 export default function ProfilePage(props) {
   const userID = props.match.params.userID;
   const [profileData, setProfileData] = useState({});
-
+  const authUserID = JSON.parse(localStorage.getItem("user")).uid;
   useEffect(() => {
     axios.get(base + `/profile/${userID}`).then((response) => {
       if (response.status === 200) {
@@ -63,6 +63,34 @@ export default function ProfilePage(props) {
       });
   };
 
+  const friendStatus = profileData?.friends?.includes(authUserID)
+    ? { class: "unfriend-button", content: "Unfriend" }
+    : profileData?.friendRequested?.includes(authUserID)
+    ? { class: "sent-button", content: "Request Sent" }
+    : profileData?.friendRequests?.includes(authUserID)
+    ? { class: "accept-button", content: "Accept Request" }
+    : { class: "send-button", content: "Send Request" };
+
+  const onFriendActionButtonPress = (buttonType) => {
+    switch (buttonType) {
+      case "unfriend-button": {
+        break;
+      }
+      case "sent-button": {
+        break;
+      }
+      case "accept-button": {
+        break;
+      }
+      case "send-button": {
+        break;
+      }
+      default: {
+        console.log("Invalid case");
+      }
+    }
+  };
+
   return (
     <Container className="pt-5">
       <Row>
@@ -85,8 +113,14 @@ export default function ProfilePage(props) {
           <Row align="center" className="mt-3">
             <Col md={4}></Col>
             {isSelf ? null : (
-              <Col md={4} className="x-small-block request-button">
-                Send Request
+              <Col
+                md={4}
+                className={"x-small-block " + friendStatus.class}
+                onClick={() => {
+                  onFriendActionButtonPress(friendStatus.class);
+                }}
+              >
+                {friendStatus.content}
               </Col>
             )}
           </Row>
@@ -185,42 +219,6 @@ export default function ProfilePage(props) {
               </Row>
             ))
           )}
-          {/* {profileData.myPosts?.map((post) => (
-            <Row key={post._id}>
-              <Card className="card-style mt-3 my-post-card">
-                <Row className="py-2 px-3">
-                  <Col md={2}>
-                    <Image
-                      className="post-photo"
-                      src={profileData.photo}
-                      roundedcircle="true"
-                    />
-                  </Col>
-                  <Col md={isSelf ? 9 : 10}>
-                    <Row className="post-user-name large-block">
-                      <Link to={"/profile/" + profileData._id}>
-                        {profileData.name}
-                      </Link>
-                    </Row>
-                    <Row className="small-block">{post.content}</Row>
-                    <Row className="footer-block">
-                      {getPostDate(post.createdAt)}
-                    </Row>
-                  </Col>
-                  {isSelf ? (
-                    <Col md={1}>
-                      <AiFillDelete
-                        className="delete-button"
-                        onClick={() =>
-                          onDeletePost(profileData.userID, post._id)
-                        }
-                      />
-                    </Col>
-                  ) : null}
-                </Row>
-              </Card>
-            </Row>
-          ))} */}
         </Col>
       </Row>
     </Container>
