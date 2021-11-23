@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
 
 def jaccard_binary(x,y):
     """A function for finding the similarity between two binary vectors"""
