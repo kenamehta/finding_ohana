@@ -1,7 +1,7 @@
 from flask import Flask, request
 import MongoDb
 from friend_recommendations import get_recommendations
-from populate_user_data import populate_matrix
+# from populate_user_data import populate_matrix
 from comprehend import comprehend_text
 from datetime import datetime
 
@@ -31,7 +31,7 @@ def generateTags():
 
 @app.route('/generateFriendRecommendations', methods=['POST'])
 def generateFriendRecommendations():
-    req = request.getjson()
+    req = request.get_json()
     user_id = req['userID']
     result = get_recommendations(user_id)
     return result
@@ -73,14 +73,14 @@ def tag_posts():
         db["profiles"].update_one({"_id": user_id}, {"$set": {"tags": user_tags}})
     return result
 
-@app.route('/populateUserData', methods=['POST'])
-def populate_user_data():
-    users = db["profiles"].find({})
-    print([user['_id'] for user in users])
-    # for user in users:
-    #     print(user)
-    populate_matrix(users)
-    return {"Test": "Run"}
+# @app.route('/populateUserData', methods=['POST'])
+# def populate_user_data():
+#     users = db["profiles"].find({})
+#     print([user['_id'] for user in users])
+#     # for user in users:
+#     #     print(user)
+#     populate_matrix(users)
+#     return {"Test": "Run"}
 
 """Find all posts relevant to a user
 1. Find tags associated with that user
@@ -88,6 +88,28 @@ def populate_user_data():
 3. Recommend them to the user
 Optional. Get userIDs of users whose posts are selected. Get userIDs of recommended users.
 Recommend posts from users based on the union."""
+@app.route('/getRecommendedPosts', methods=['POST'])
+def get_recommended_posts():
+    req = request.get_json()
+    user_id = req['userID']
+    user = db["profiles"].find_one({"_id": user_id})
+    mongo_query = []
+    for tag in user["tags"]:
+        mongo_query.append({"tags": tag})
+    if mongo_query:
+        posts = db["posts"].find({"$or": mongo_query})
+    else:
+        posts = db["posts"].find({})
+    recommended_posts = []
+    for post in posts:
+        if post["userID"] != user_id:
+            recommended_posts.append(str(post["_id"]))
+        # else:
+        #     print(str(post["_id"]) + " belongs to the same user")
+    # print(recommended_posts)
+    return {"recommended_posts": recommended_posts}
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
 
