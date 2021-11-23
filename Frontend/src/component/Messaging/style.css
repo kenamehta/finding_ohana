@@ -1,0 +1,23 @@
+.card-style {
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.post-photo-network {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  object-fit: cover;
+}
+.message-button:hover {
+    cursor: pointer;
+    transform: scale(1.15);
+    color: red;
+  }
+  .my-post-messagecard{
+    width: 95%;
+  }
+  .message-button
+  {
+      text-align:right
+  }
