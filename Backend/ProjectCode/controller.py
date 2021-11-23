@@ -111,6 +111,16 @@ def get_recommended_posts():
     return {"recommended_posts": recommended_posts}
 
 
+@app.route('/getCommonTags', methods=['POST'])
+def get_common_tags():
+    req = request.get_json()
+    user1_id = req['user1ID']
+    user2_id = req['user2ID']
+    user1 = db["profiles"].find_one({"_id": user1_id})
+    user2 = db["profiles"].find_one({"_id": user2_id})
+    common_tags = set(user1["tags"]).intersection(user2["tags"])
+    return {"common_tags": list(common_tags)}
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
 
