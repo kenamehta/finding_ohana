@@ -82,7 +82,7 @@ app.post("/updateDetails/:userID", (req, res) => {
   Profile.findByIdAndUpdate(req.params.userID, data, {
     new: true,
     useFindAndModify: false,
-  }).then((result) => {
+  }).populate("myPosts").then((result) => {
     res
       .status(200)
       .send({ message: "Profile details updated", payload: result });
