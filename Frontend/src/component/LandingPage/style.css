@@ -1,28 +1,10 @@
 .card-header-style {
   /* background-color: honeydew !important; */
-  background-image: linear-gradient(
-    to right,
-    blue,
-    indigo,
-    red,
-    orange,
-    yellow,
-    green,
-    violet
-  );
+  background-image: linear-gradient(to right, orange, yellow);
   color: white;
 }
 .share-button {
-  background-image: linear-gradient(
-    to right,
-    indigo,
-    violet,
-    green,
-    yellow,
-    orange,
-    red,
-    blue
-  );
+  background-image: linear-gradient(to right, orange, yellow);
   color: black !important;
   border-color: white !important;
   border-radius: 20% !important;
