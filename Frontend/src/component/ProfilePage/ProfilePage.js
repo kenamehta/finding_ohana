@@ -108,32 +108,27 @@ export default function ProfilePage(props) {
   };
   const sendRequest = () => {
     axios
-    .get(`${pybase}sendRequest?userID=${authUserID}&friendID=${userID}`)
-    .then(() => {
-      getProfileData(userID);
-    });
-  }
-  const accept = () => {
-      //accept friend request
-      axios
-        .get(
-          `${pybase}acceptRequest?userID=${authUserID}&friendID=${userID}`
-        )
-        .then(() => {
-          getProfileData(userID);
-        });
-  }
-  const removeRequest = () => {
-    //accept friend request
-    axios
-      .get(
-        `${pybase}removeRequest?userID=${authUserID}&friendID=${userID}`
-      )
+      .get(`${pybase}sendRequest?userID=${authUserID}&friendID=${userID}`)
       .then(() => {
         getProfileData(userID);
       });
-}
-
+  };
+  const accept = () => {
+    //accept friend request
+    axios
+      .get(`${pybase}acceptRequest?userID=${authUserID}&friendID=${userID}`)
+      .then(() => {
+        getProfileData(userID);
+      });
+  };
+  const removeRequest = () => {
+    //accept friend request
+    axios
+      .get(`${pybase}removeRequest?userID=${authUserID}&friendID=${userID}`)
+      .then(() => {
+        getProfileData(userID);
+      });
+  };
 
   return (
     <Container className="pt-5">

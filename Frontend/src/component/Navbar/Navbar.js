@@ -9,25 +9,26 @@ export default function NavigationBar() {
   const storeContext = useContext(StoreContext);
   const { state, dispatch } = storeContext;
 
-  useEffect(() => {
-    if (localStorage.getItem("user")) {
-      const user = JSON.parse(localStorage.getItem("user"));
-      const userID = user.uid;
-      const userName = user.displayName;
-      const payload = { userID, userName, email: user.email, role: "Member" };
-      axios.post(base + "/profile", payload).then((result) => {
-        dispatch({
-          type: "SET_INITIAL_PROFILE",
-          value: {
-            userID: result.data.payload._id,
-            userName: result.data.payload.name,
-            profilePhoto: result.data.payload.photo,
-          },
-        });
-      });
-    }
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("user")) {
+  //     console.log("You are in navbar")
+  //     const user = JSON.parse(localStorage.getItem("user"));
+  //     const userID = user.uid;
+  //     const userName = user.displayName;
+  //     const payload = { userID, userName, email: user.email, role: "Member" };
+  //     axios.post(base + "/profile", payload).then((result) => {
+  //       dispatch({
+  //         type: "SET_INITIAL_PROFILE",
+  //         value: {
+  //           userID: result.data.payload._id,
+  //           userName: result.data.payload.name,
+  //           profilePhoto: result.data.payload.photo,
+  //         },
+  //       });
+  //     });
+  //   }
+  //   // eslint-disable-next-line
+  // },[]);
   const handleLogout = () => {
     auth.signOut();
     localStorage.clear();
@@ -37,8 +38,8 @@ export default function NavigationBar() {
     let message = "Hi, " + user.displayName.split(" ")[0];
     let photoURL = state.profilePhoto ?? user.photoURL;
     user.photoURL = photoURL;
-    console.log(user)
-    localStorage.setItem("user",JSON.stringify(user));
+    console.log(user);
+    localStorage.setItem("user", JSON.stringify(user));
     let currentTalkjsUser = {
       name: user.displayName,
       email: user.email,

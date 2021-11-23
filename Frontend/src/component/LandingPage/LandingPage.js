@@ -31,8 +31,21 @@ export default function MediaCard() {
   const authUser = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
+    console.log("You are in landing");
+
     axios.get(`/recommendedPosts/${authUser.uid}`);
   }, [authUser.uid]);
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      console.log("You are in navbar");
+      const user = JSON.parse(localStorage.getItem("user"));
+      const userID = user.uid;
+      const userName = user.displayName;
+      const payload = { userID, userName, email: user.email, role: "Member" };
+      axios.post(base + "/profile", payload).then((result) => {});
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const onShare = (e) => {
     e.preventDefault();
