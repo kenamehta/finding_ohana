@@ -1,5 +1,7 @@
-import pymongo
-from flask import request, json, Response
+import json
+
+from bson import json_util
+from flask import request, Response
 
 import MongoDb
 from controller import app
@@ -23,7 +25,7 @@ def getFriends():
             friendsList.append(db["profiles"].find_one({"_id": friend}))
     friends["friends"] = friendsList
     payload["payload"] = friends
-    return payload
+    return json.loads(json_util.dumps(payload))
 
 
 @app.route('/getTimeline', methods=['GET'])
@@ -41,7 +43,7 @@ def getTimelinePosts():
         postList.append(post)
     payload["payload"] = timeline
     timeline["posts"] = postList
-    return payload
+    return Response(payload, status=200, mimetype='application/json')
 
 
 @app.route('/sendRequest')

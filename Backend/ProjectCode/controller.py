@@ -26,11 +26,16 @@ def generateTags():
         db["users"].update_one({"userId": userId}, {"$set": {"tags": tags}})
     return 'generated'
 
+
 @app.route('/generateFriendRecommendations', methods=['POST'])
 def generateFriendRecommendations():
     req = request.getjson()
     user_id = req['userID']
     result = get_recommendations(user_id)
     return result
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
 import timeline
