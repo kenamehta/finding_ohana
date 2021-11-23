@@ -29,18 +29,6 @@ export default function MediaCard() {
   const classes = useStyles();
 
   const authUser = JSON.parse(localStorage.getItem("user"));
-  if (authUser) {
-    let currentTalkjsUser = {
-      name: authUser.displayName,
-      email: authUser.email,
-      photoUrl: authUser.photoURL,
-      id: authUser.uid,
-    };
-    localStorage.setItem(
-      "currentTalkjsUser",
-      JSON.stringify(currentTalkjsUser)
-    );
-  }
 
   useEffect(() => {
     axios.get(`/recommendedPosts/${authUser.uid}`);

@@ -36,6 +36,19 @@ export default function NavigationBar() {
     let user = JSON.parse(localStorage.getItem("user"));
     let message = "Hi, " + user.displayName.split(" ")[0];
     let photoURL = state.profilePhoto ?? user.photoURL;
+    user.photoURL = photoURL;
+    console.log(user)
+    localStorage.setItem("user",JSON.stringify(user));
+    let currentTalkjsUser = {
+      name: user.displayName,
+      email: user.email,
+      photoUrl: user.photoURL,
+      id: user.uid,
+    };
+    localStorage.setItem(
+      "currentTalkjsUser",
+      JSON.stringify(currentTalkjsUser)
+    );
     return (
       <Navbar expand="lg" bg="dark" variant="dark">
         <Navbar.Brand href="/home">Finding Ohana</Navbar.Brand>
