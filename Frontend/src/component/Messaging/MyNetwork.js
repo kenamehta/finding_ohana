@@ -103,7 +103,17 @@ class MyNetwork extends Component {
         this.getIncomingFriends();
       });
   }
-
+  handleRejectClick(incomingUserId) {
+    //reject friend request
+    axios
+      .get(
+        `${pybase}rejectRequest?userID=${this.state.currentUser.id}&friendID=${incomingUserId}`
+      )
+      .then((result) => {
+        this.getFriends();
+        this.getIncomingFriends();
+      });
+  }
   render() {
     return (
       //   <div className="users">
@@ -151,38 +161,40 @@ class MyNetwork extends Component {
                 My Friends
               </h1>
             </Row>
-            {this.state.friends.map((user) => (
-              <Row key={user._id}>
-                <Card className="card-style mt-3 my-post-messagecard">
-                  <Row className="py-2 px-3">
-                    <Col md={3}>
-                      <Image
-                        className="post-photo-network"
-                        src={user.photo}
-                        roundedcircle="true"
-                      />
-                    </Col>
-                    <Col md={7}>
-                      <Row className="post-user-name large-block">
-                        <Link to={"/profile/" + user._id}>{user.name}</Link>
-                      </Row>
-                      <Row className="x-small-block">
-                        {user.bio?.length > 100
-                          ? user.bio?.substring(0, 100) + "..."
-                          : user.bio}
-                      </Row>
-                    </Col>
-                    <Col md={2} align="right">
-                      <BsFillEnvelopeFill
-                        color="blue"
-                        className="message-button"
-                        onClick={(userId) => this.handleClick(user._id)}
-                      />
-                    </Col>
-                  </Row>
-                </Card>
-              </Row>
-            ))}
+            {this.state.friends.map((user) =>
+              user ? (
+                <Row key={user?._id}>
+                  <Card className="card-style mt-3 my-post-messagecard">
+                    <Row className="py-2 px-3">
+                      <Col md={3}>
+                        <Image
+                          className="post-photo-network"
+                          src={user?.photo}
+                          roundedcircle="true"
+                        />
+                      </Col>
+                      <Col md={7}>
+                        <Row className="post-user-name large-block">
+                          <Link to={"/profile/" + user._id}>{user.name}</Link>
+                        </Row>
+                        <Row className="x-small-block">
+                          {user.bio?.length > 100
+                            ? user.bio?.substring(0, 100) + "..."
+                            : user.bio}
+                        </Row>
+                      </Col>
+                      <Col md={2} align="right">
+                        <BsFillEnvelopeFill
+                          color="blue"
+                          className="message-button"
+                          onClick={(userId) => this.handleClick(user._id)}
+                        />
+                      </Col>
+                    </Row>
+                  </Card>
+                </Row>
+              ) : null
+            )}
           </Col>
           <Col md={6}>
             <h1 className="large-block">Explore</h1>
@@ -220,7 +232,7 @@ class MyNetwork extends Component {
                         color="red"
                         className="message-button ml-1"
                         size={19}
-                        onClick={(userId) => this.handleClick(user._id)}
+                        onClick={(userId) => this.handleRejectClick(user._id)}
                       />
                       {/* </Row> */}
                     </Col>

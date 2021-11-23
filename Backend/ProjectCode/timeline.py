@@ -70,7 +70,7 @@ def sendRequest():
     userId = request.args.get('userID')
     friendId = request.args.get('friendID')
     try:
-        db["profiles"].update({"_id": userId}, {"$push": {"sentRequests": friendId}})
+        db["profiles"].update({"_id": userId}, {"$push": {"friendRequested": friendId}})
         db["profiles"].update({"_id": friendId}, {"$push": {"friendRequests": userId}})
         return Response(status=200, mimetype='application/json')
     except Exception as e:
@@ -86,8 +86,47 @@ def acceptRequest():
     try:
         db["profiles"].update({"_id": userId}, {"$push": {"friends": friendId}})
         db["profiles"].update({"_id": friendId}, {"$push": {"friends": userId}})
-        db["profiles"].update({"_id": friendId}, {"$pull": {"sentRequests": userId}})
+        db["profiles"].update({"_id": friendId}, {"$pull": {"friendRequested": userId}})
         db["profiles"].update({"_id": userId}, {"$pull": {"friendRequests": friendId}})
+        return Response(status=200, mimetype='application/json')
+    except Exception as e:
+        print(e)
+        return Response(status=500, mimetype='application/json')
+
+@app.route('/rejectRequest')
+@cross_origin()
+def rejectRequest():
+    userId = request.args.get('userID')
+    friendId = request.args.get('friendID')
+    try:
+        db["profiles"].update({"_id": friendId}, {"$pull": {"friendRequested": userId}})
+        db["profiles"].update({"_id": userId}, {"$pull": {"friendRequests": friendId}})
+        return Response(status=200, mimetype='application/json')
+    except Exception as e:
+        print(e)
+        return Response(status=500, mimetype='application/json')
+
+@app.route('/unfriendRequest')
+@cross_origin()
+def unfriendRequest():
+    userId = request.args.get('userID')
+    friendId = request.args.get('friendID')
+    try:
+        db["profiles"].update({"_id": friendId}, {"$pull": {"friends": userId}})
+        db["profiles"].update({"_id": userId}, {"$pull": {"friends": friendId}})
+        return Response(status=200, mimetype='application/json')
+    except Exception as e:
+        print(e)
+        return Response(status=500, mimetype='application/json')
+
+@app.route('/removeRequest')
+@cross_origin()
+def removeRequest():
+    userId = request.args.get('userID')
+    friendId = request.args.get('friendID')
+    try:
+        db["profiles"].update({"_id": friendId}, {"$pull": {"friendRequests": userId}})
+        db["profiles"].update({"_id": userId}, {"$pull": {"friendRequested": friendId}})
         return Response(status=200, mimetype='application/json')
     except Exception as e:
         print(e)

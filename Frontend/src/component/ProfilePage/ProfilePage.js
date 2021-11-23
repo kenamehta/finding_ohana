@@ -8,12 +8,17 @@ import EditableData from "./EditableData";
 import { stringFromValues, getPostDate } from "./util";
 import { AiFillDelete, AiOutlineRead } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { pybase } from "../../config/address";
 
 export default function ProfilePage(props) {
   const userID = props.match.params.userID;
   const [profileData, setProfileData] = useState({});
   const authUserID = JSON.parse(localStorage.getItem("user")).uid;
   useEffect(() => {
+    getProfileData(userID);
+  }, [userID]);
+
+  const getProfileData = (userID) => {
     axios.get(base + `/profile/${userID}`).then((response) => {
       if (response.status === 200) {
         if (
@@ -29,8 +34,7 @@ export default function ProfilePage(props) {
         }
       }
     });
-  }, [userID]);
-
+  };
   const updateDetails = (fieldName, value) => {
     let data = {};
     if (fieldName === "hobby" || fieldName === "interest") {
@@ -65,24 +69,28 @@ export default function ProfilePage(props) {
 
   const friendStatus = profileData?.friends?.includes(authUserID)
     ? { class: "unfriend-button", content: "Unfriend" }
-    : profileData?.friendRequested?.includes(authUserID)
-    ? { class: "sent-button", content: "Request Sent" }
     : profileData?.friendRequests?.includes(authUserID)
+    ? { class: "sent-button", content: "Request Sent" }
+    : profileData?.friendRequested?.includes(authUserID)
     ? { class: "accept-button", content: "Accept Request" }
     : { class: "send-button", content: "Send Request" };
 
   const onFriendActionButtonPress = (buttonType) => {
     switch (buttonType) {
       case "unfriend-button": {
+        unfriend();
         break;
       }
       case "sent-button": {
+        removeRequest();
         break;
       }
       case "accept-button": {
+        accept();
         break;
       }
       case "send-button": {
+        sendRequest();
         break;
       }
       default: {
@@ -90,6 +98,42 @@ export default function ProfilePage(props) {
       }
     }
   };
+
+  const unfriend = () => {
+    axios
+      .get(`${pybase}unfriendRequest?userID=${authUserID}&friendID=${userID}`)
+      .then(() => {
+        getProfileData(userID);
+      });
+  };
+  const sendRequest = () => {
+    axios
+    .get(`${pybase}sendRequest?userID=${authUserID}&friendID=${userID}`)
+    .then(() => {
+      getProfileData(userID);
+    });
+  }
+  const accept = () => {
+      //accept friend request
+      axios
+        .get(
+          `${pybase}acceptRequest?userID=${authUserID}&friendID=${userID}`
+        )
+        .then(() => {
+          getProfileData(userID);
+        });
+  }
+  const removeRequest = () => {
+    //accept friend request
+    axios
+      .get(
+        `${pybase}removeRequest?userID=${authUserID}&friendID=${userID}`
+      )
+      .then(() => {
+        getProfileData(userID);
+      });
+}
+
 
   return (
     <Container className="pt-5">

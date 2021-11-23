@@ -3,4 +3,3 @@ versioneer
 Flask
 numpy
 pandas
-bson
