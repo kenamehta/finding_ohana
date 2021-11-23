@@ -3,7 +3,7 @@ import MongoDb
 from friend_recommendations import get_recommendations
 # from populate_user_data import populate_matrix
 from comprehend import comprehend_text
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 db = MongoDb.getConnection()
@@ -48,7 +48,8 @@ def tag_posts():
     {
         userid, tags{t1:count1, t2:count2, ...}
     }"""
-    cutoff_date = datetime(2021,11,21,0,0,0)
+    # Select a window of T-2 hours
+    cutoff_date = datetime.today() - timedelta(hours=2)
     all_posts = db["posts"].find({'createdAt': {"$gt": cutoff_date}})
     result = {}
     for post in all_posts:
@@ -106,7 +107,7 @@ def get_recommended_posts():
             recommended_posts.append(str(post["_id"]))
         # else:
         #     print(str(post["_id"]) + " belongs to the same user")
-    # print(recommended_posts)
+    db["profiles"].update_one({"_id": user_id}, {"$set": {"recommendedPosts": recommended_posts}})
     return {"recommended_posts": recommended_posts}
 
 
