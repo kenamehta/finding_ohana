@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import "./style.css";
 import { BsFillEnvelopeFill, BsCheckCircleFill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
+import { getTags } from "../ProfilePage/util";
 
 // BsFillEnvelopeFill
 class MyNetwork extends Component {
@@ -115,43 +116,6 @@ class MyNetwork extends Component {
   }
   render() {
     return (
-      //   <div className="users">
-      //     <div className="current-user-container">
-      //       {currentUser && (
-      //         <div>
-      //           <picture className="current-user-picture">
-      //             <img alt={currentUser.name} src={currentUser.photoUrl} />
-      //           </picture>
-      //           <div className="current-user-info">
-      //             <h3>{currentUser.name}</h3>
-      //             <p>{currentUser.description}</p>
-      //           </div>
-      //         </div>
-      //       )}
-      //     </div>
-
-      //     <div className="users-container">
-      //       <ul>
-      //         {this.state.friends.map((user) => (
-      //           <li key={user.id} className="user">
-      //               <img className ="post-photo"src={user.photo} alt={`${user.name}`} />
-      //             <div className="user-info-container">
-      //               <div className="user-info">
-      //                 <h4>{user.name}</h4>
-      //                 <p>{user.bio}</p>
-      //               </div>
-      //               <div className="user-action">
-      //                 <button onClick={(userId) => this.handleClick(user._id)}>
-      //                   Message
-      //                 </button>
-      //               </div>
-      //             </div>
-      //           </li>
-      //         ))}
-      //       </ul>
-
-      //   </div>
-      //   </div>
       <Container>
         <Row className="pt-3">
           <Col md={6}>
@@ -177,16 +141,25 @@ class MyNetwork extends Component {
                           <Link to={"/profile/" + user._id}>{user.name}</Link>
                         </Row>
                         <Row className="x-small-block">
-                          {user.bio?.length > 100
-                            ? user.bio?.substring(0, 100) + "..."
-                            : user.bio}
+                          {user.tags && user.tags.length > 0 ? (
+                            <>
+                              <span>
+                                {" "}
+                                <b>Common interests: </b> {getTags(user.tags)}
+                              </span>
+                            </>
+                          ) : user.bio?.length > 100 ? (
+                            user.bio?.substring(0, 100) + "..."
+                          ) : (
+                            user.bio
+                          )}
                         </Row>
                       </Col>
                       <Col md={2} align="right">
                         <BsFillEnvelopeFill
                           color="blue"
                           className="message-button"
-                          onClick={(userId) => this.handleClick(user._id)}
+                          onClick={() => this.handleClick(user._id)}
                         />
                       </Col>
                     </Row>
@@ -213,9 +186,18 @@ class MyNetwork extends Component {
                         <Link to={"/profile/" + user._id}>{user.name}</Link>
                       </Row>
                       <Row className="x-small-block">
-                        {user.bio?.length > 100
-                          ? user.bio?.substring(0, 100) + "..."
-                          : user.bio}
+                        {user.tags && user.tags.length > 0 ? (
+                          <>
+                            <span>
+                              {" "}
+                              <b>Common interests: </b> {getTags(user.tags)}
+                            </span>
+                          </>
+                        ) : user.bio?.length > 100 ? (
+                          user.bio?.substring(0, 100) + "..."
+                        ) : (
+                          user.bio
+                        )}
                       </Row>
                     </Col>
                     <Col md={2} align="right">

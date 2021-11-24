@@ -21,3 +21,9 @@ export const getPostDate = (utcDate) => {
   const time = ((hours + 11) % 12) + 1 + ":" + timeArr[1] + " " + suffix;
   return date + ", " + time;
 };
+
+export const getTags = (tagArr) => {
+  return tagArr
+    .map((tag) => tag.substring(0, 1).toUpperCase() + tag.substring(1))
+    .join(", ");
+};
