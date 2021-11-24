@@ -1,5 +1,4 @@
-pymongo~=3.11.3
-Flask~=1.1.2
-numpy~=1.19.1
-pandas~=1.0.3
-matplotlib~=3.2.1
+pymongo
+Flask
+numpy
+pandas

@@ -29,6 +29,7 @@ def getFriends():
     payload["payload"] = friends
     return json.loads(json_util.dumps(payload))
 
+
 @app.route('/getIncomingFriends', methods=['GET'])
 @cross_origin()
 def getIncomingFriends():
@@ -42,8 +43,6 @@ def getIncomingFriends():
     friends["friends"] = friendsList
     payload["payload"] = friends
     return json.loads(json_util.dumps(payload))
-
-
 
 
 @app.route('/getTimeline', methods=['GET'])
@@ -93,6 +92,7 @@ def acceptRequest():
         print(e)
         return Response(status=500, mimetype='application/json')
 
+
 @app.route('/rejectRequest')
 @cross_origin()
 def rejectRequest():
@@ -106,6 +106,7 @@ def rejectRequest():
         print(e)
         return Response(status=500, mimetype='application/json')
 
+
 @app.route('/unfriendRequest')
 @cross_origin()
 def unfriendRequest():
@@ -118,6 +119,7 @@ def unfriendRequest():
     except Exception as e:
         print(e)
         return Response(status=500, mimetype='application/json')
+
 
 @app.route('/removeRequest')
 @cross_origin()

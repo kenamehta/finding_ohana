@@ -3,3 +3,5 @@ versioneer
 Flask
 numpy
 pandas
+boto3
+flask_cors
