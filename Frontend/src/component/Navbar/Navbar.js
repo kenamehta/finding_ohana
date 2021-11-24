@@ -1,13 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { auth } from "../../service/auth";
-import axios from "axios";
-import { base } from "../../config/address";
 import { StoreContext } from "../../context/store";
 
 export default function NavigationBar() {
   const storeContext = useContext(StoreContext);
-  const { state, dispatch } = storeContext;
+  const { state } = storeContext;
 
   // useEffect(() => {
   //   if (localStorage.getItem("user")) {
