@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import "./style.css";
 import axios from "axios";
-import { base } from "../../config/address";
+import { base, pybase } from "../../config/address";
 import { getPostDate } from "../ProfilePage/util";
 import { Link } from "react-router-dom";
 import { StoreContext } from "../../context/store";
@@ -32,8 +32,15 @@ export default function MediaCard() {
   const authUser = JSON.parse(localStorage.getItem("user"));
   const storeContext = useContext(StoreContext);
   const { dispatch } = storeContext;
+
   useEffect(() => {
-    axios.get(`/recommendedPosts/${authUser.uid}`);
+    axios
+      .post(`${pybase}getRecommendedPosts`, { userID: authUser.uid })
+      .then((response) => {
+        if (response.status === 200) {
+          setRecommendedPosts(response.data.recommendedPosts);
+        }
+      });
   }, [authUser.uid]);
 
   useEffect(() => {
@@ -109,13 +116,14 @@ export default function MediaCard() {
 
       <h3 className="mt-4 large-block">Posts you might be interested in...</h3>
       {recommendedPosts.map((post) => (
-        <Row key={post._id}>
+        <Row key={post._id.$oid}>
+          {console.log(post)}
           <Card className="card-style mt-3 my-post-card">
             <Row className="py-2 px-3">
               <Col md={2}>
                 <Image
                   className="post-photo"
-                  src={post.userID.photo}
+                  src={post.userID.photo ?? `${base}/default.png`}
                   roundedcircle="true"
                 />
               </Col>
@@ -127,7 +135,7 @@ export default function MediaCard() {
                 </Row>
                 <Row className="small-block">{post.content}</Row>
                 <Row className="footer-block">
-                  {getPostDate(post.createdAt)}
+                  {getPostDate(post.createdAt.$date)}
                 </Row>
               </Col>
             </Row>
