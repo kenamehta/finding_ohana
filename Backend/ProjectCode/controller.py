@@ -1,7 +1,6 @@
 from flask import Flask, request
 import MongoDb
 from friend_recommendations import get_recommendations
-# from populate_user_data import populate_matrix
 from comprehend import comprehend_text
 from datetime import datetime, timedelta
 
@@ -29,12 +28,14 @@ def generateTags():
         db["users"].update_one({"userId": userId}, {"$set": {"tags": tags}})
     return 'generated'
 
+
 @app.route('/generateFriendRecommendations', methods=['POST'])
 def generateFriendRecommendations():
     req = request.get_json()
     user_id = req['userID']
     result = get_recommendations(user_id)
     return result
+
 
 @app.route('/tagPosts', methods=['POST'])
 def tag_posts():
@@ -74,6 +75,7 @@ def tag_posts():
         db["profiles"].update_one({"_id": user_id}, {"$set": {"tags": user_tags}})
     return result
 
+
 # @app.route('/populateUserData', methods=['POST'])
 # def populate_user_data():
 #     users = db["profiles"].find({})
@@ -89,6 +91,8 @@ def tag_posts():
 3. Recommend them to the user
 Optional. Get userIDs of users whose posts are selected. Get userIDs of recommended users.
 Recommend posts from users based on the union."""
+
+
 @app.route('/getRecommendedPosts', methods=['POST'])
 def get_recommended_posts():
     req = request.get_json()
@@ -122,6 +126,6 @@ def get_common_tags():
     return {"common_tags": list(common_tags)}
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
 
 import timeline
