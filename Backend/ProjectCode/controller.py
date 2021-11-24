@@ -3,6 +3,7 @@ import json
 from bson import json_util
 from flask import Flask, request
 import MongoDb
+from flask_cors import cross_origin
 from friend_recommendations import get_recommendations
 from comprehend import comprehend_text
 from datetime import datetime, timedelta
@@ -12,11 +13,13 @@ db = MongoDb.getConnection()
 
 
 @app.route('/')
+@cross_origin()
 def hello_world():
     return 'Hello World!'
 
 
 @app.route('/generateTags', methods=['POST'])
+@cross_origin()
 def generateTags():
     req = request.get_json()
     tags = req['tags']
@@ -33,6 +36,7 @@ def generateTags():
 
 
 @app.route('/generateFriendRecommendations', methods=['POST'])
+@cross_origin()
 def generateFriendRecommendations():
     req = request.get_json()
     user_id = req['userID']
@@ -41,6 +45,7 @@ def generateFriendRecommendations():
 
 
 @app.route('/tagPosts', methods=['POST'])
+@cross_origin()
 def tag_posts():
     """Fetch new posts from mongo
     For each post, generate tags
@@ -97,6 +102,7 @@ Recommend posts from users based on the union."""
 
 
 @app.route('/getRecommendedPosts', methods=['POST'])
+@cross_origin()
 def get_recommended_posts():
     req = request.get_json()
     user_id = req['userID']
@@ -126,6 +132,7 @@ def get_recommended_posts():
 
 
 @app.route('/getCommonTags', methods=['POST'])
+@cross_origin()
 def get_common_tags():
     req = request.get_json()
     user1_id = req['user1ID']
