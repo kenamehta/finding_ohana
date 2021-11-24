@@ -46,6 +46,7 @@ def getIncomingFriends():
 
 
 @app.route('/getTimeline', methods=['GET'])
+@cross_origin()
 def getTimelinePosts():
     userId = request.args.get('userID')
     postList = []
