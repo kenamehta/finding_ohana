@@ -1,3 +1,6 @@
+import json
+
+from bson import json_util
 from flask import Flask, request
 import MongoDb
 from friend_recommendations import get_recommendations
@@ -108,11 +111,18 @@ def get_recommended_posts():
     recommended_posts = []
     for post in posts:
         if post["userID"] != user_id:
-            recommended_posts.append(str(post["_id"]))
+            recommended_posts.append(post["_id"])
         # else:
         #     print(str(post["_id"]) + " belongs to the same user")
+    payload = {}
+    payload["recommendedPosts"] = []
+    for post in recommended_posts:
+        currentPost = db["posts"].find_one({"_id": post})
+        userProfile = currentPost["userID"]
+        currentPost["userID"] = db["profiles"].find_one({"_id": userProfile})
+        payload["recommendedPosts"].append(currentPost)
     db["profiles"].update_one({"_id": user_id}, {"$set": {"recommendedPosts": recommended_posts}})
-    return {"recommended_posts": recommended_posts}
+    return json.loads(json_util.dumps(payload))
 
 
 @app.route('/getCommonTags', methods=['POST'])
@@ -124,6 +134,7 @@ def get_common_tags():
     user2 = db["profiles"].find_one({"_id": user2_id})
     common_tags = set(user1["tags"]).intersection(user2["tags"])
     return {"common_tags": list(common_tags)}
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
