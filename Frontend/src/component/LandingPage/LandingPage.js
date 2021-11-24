@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -14,6 +14,7 @@ import axios from "axios";
 import { base } from "../../config/address";
 import { getPostDate } from "../ProfilePage/util";
 import { Link } from "react-router-dom";
+import { StoreContext } from "../../context/store";
 
 const useStyles = makeStyles({
   root: {
@@ -29,12 +30,12 @@ export default function MediaCard() {
   const classes = useStyles();
 
   const authUser = JSON.parse(localStorage.getItem("user"));
-
+  const storeContext = useContext(StoreContext);
+  const { dispatch } = storeContext;
   useEffect(() => {
-    console.log("You are in landing");
-
     axios.get(`/recommendedPosts/${authUser.uid}`);
   }, [authUser.uid]);
+
   useEffect(() => {
     if (localStorage.getItem("user")) {
       console.log("You are in navbar");
@@ -42,7 +43,16 @@ export default function MediaCard() {
       const userID = user.uid;
       const userName = user.displayName;
       const payload = { userID, userName, email: user.email, role: "Member" };
-      axios.post(base + "/profile", payload).then((result) => {});
+      axios.post(base + "/profile", payload).then((result) => {
+        dispatch({
+          type: "SET_INITIAL_PROFILE",
+          value: {
+            userID: result.data.payload._id,
+            userName: result.data.payload.name,
+            profilePhoto: result.data.payload.photo,
+          },
+        });
+      });
     }
     // eslint-disable-next-line
   }, []);

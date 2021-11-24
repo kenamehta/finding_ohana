@@ -55,7 +55,7 @@ class MyNetwork extends Component {
     console.log(this.state.friends);
     /* Retrieve the two users that will participate in the conversation */
     const { currentUser } = this.state;
-    const user = this.state.friends.find((user) => user._id === userId);
+    const user = this.state.friends.find((user) => user && user._id === userId);
     console.log(currentUser);
     console.log(user);
     user["id"] = user._id;
@@ -77,9 +77,8 @@ class MyNetwork extends Component {
 
         /* Get a conversation ID or create one */
         const conversationId = Talk.oneOnOneId(me, other);
-        const conversation = window.talkSession.getOrCreateConversation(
-          conversationId
-        );
+        const conversation =
+          window.talkSession.getOrCreateConversation(conversationId);
 
         /* Set participants of the conversations */
         conversation.setParticipant(me);
