@@ -120,32 +120,34 @@ export default function MediaCard() {
       </Card>
 
       <h3 className="mt-4 large-block">Posts you might be interested in...</h3>
-      {recommendedPosts.map((post) => (
-        <Row key={post._id.$oid}>
-          <Card className="card-style mt-3 my-post-card">
-            <Row className="py-2 px-3">
-              <Col md={2}>
-                <Image
-                  className="post-photo"
-                  src={post.userID.photo ?? `${base}/default.png`}
-                  roundedcircle="true"
-                />
-              </Col>
-              <Col md={10}>
-                <Row className="post-user-name large-block">
-                  <Link to={"/profile/" + post.userID._id}>
-                    {post.userID.name}
-                  </Link>
-                </Row>
-                <Row className="small-block">{post.content}</Row>
-                <Row className="footer-block">
-                  {getPostDate(post.createdAt.$date)}
-                </Row>
-              </Col>
-            </Row>
-          </Card>
-        </Row>
-      ))}
+      {recommendedPosts.map((post) =>
+        post ? (
+          <Row key={post._id.$oid}>
+            <Card className="card-style mt-3 my-post-card">
+              <Row className="py-2 px-3">
+                <Col md={2}>
+                  <Image
+                    className="post-photo"
+                    src={post.userID.photo ?? `${base}/default.png`}
+                    roundedcircle="true"
+                  />
+                </Col>
+                <Col md={10}>
+                  <Row className="post-user-name large-block">
+                    <Link to={"/profile/" + post.userID._id}>
+                      {post.userID.name}
+                    </Link>
+                  </Row>
+                  <Row className="small-block">{post.content}</Row>
+                  <Row className="footer-block">
+                    {getPostDate(post.createdAt.$date)}
+                  </Row>
+                </Col>
+              </Row>
+            </Card>
+          </Row>
+        ) : null
+      )}
     </Container>
   );
 }
