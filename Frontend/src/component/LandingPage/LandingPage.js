@@ -75,6 +75,11 @@ export default function MediaCard() {
           setRecommendedPosts([newPost, ...recommendedPosts]);
           setNewPostContent("");
           setIsPosting(false);
+          axios.post(`${pybase}tagPosts`).then((response2) => {
+            if (response2.status === 200) {
+              console.log("Tags created");
+            }
+          });
         }
       });
   };
@@ -117,7 +122,6 @@ export default function MediaCard() {
       <h3 className="mt-4 large-block">Posts you might be interested in...</h3>
       {recommendedPosts.map((post) => (
         <Row key={post._id.$oid}>
-          {console.log(post)}
           <Card className="card-style mt-3 my-post-card">
             <Row className="py-2 px-3">
               <Col md={2}>
